@@ -10,6 +10,7 @@
 #include <memory>
 #include <cstddef>
 #include <string>
+#include <iostream>
 
 #include "holmes/octet/buffer.h"
 
@@ -267,6 +268,17 @@ public:
 		return _length;
 	}
 };
+
+/** Write an octet string as hex to an output stream.
+ * Each octet is converted to a pair of hex digits. Where there is a choice
+ * between upper and lower case, this is determined by the stream state.
+ * No whitespace or other characters are added, regardless of the length of
+ * the octet string.
+ * @param out the output stream
+ * @param octets the octet string
+ * @return the output stream
+ */
+std::ostream& operator<<(std::ostream& out, const string& octets);
 
 } /* namespace holmes::octet */
 
