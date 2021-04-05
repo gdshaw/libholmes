@@ -50,6 +50,24 @@ public:
 	/** The type of a const pointer to an octet. */
 	typedef const value_type* const_pointer;
 
+	/** The type of an iterator into an octet string.
+	 * Note that this is the same as a const_iterator, since the content
+	 * is immutable.
+	 */
+	typedef const_pointer iterator;
+
+	/** The type of a const iterator into an octet string. */
+	typedef const_pointer const_iterator;
+
+	/** The type of a reverse iterator into an octet string.
+	 * Note that this is the same as a const_reverse_iterator, since the
+	 * content is immutable.
+	 */
+	typedef std::reverse_iterator<iterator> reverse_iterator;
+
+	/** The type of a const reverse iterator into an octet string. */
+	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
 	/** A type to represent a number of octets. */
 	typedef size_t size_type;
 
@@ -130,6 +148,62 @@ public:
 			this->_length = that._length;
 		}
 		return *this;
+	}
+
+	/** Get a const iterator to the start of the sequence.
+	 * @return the iterator
+	 */
+	const_iterator begin() const {
+		return _data;
+	}
+
+	/** Get a const iterator to the start of the sequence (alias).
+	 * @return the iterator
+	 */
+	const_iterator cbegin() const {
+		return _data;
+	}
+
+	/** Get a const iterator to the end of the sequence.
+	 * @return the iterator
+	 */
+	const_iterator end() const {
+		return _data + _length;
+	}
+
+	/** Get a const iterator to the end of the sequence (alias).
+	 * @return the iterator
+	 */
+	const_iterator cend() const {
+		return _data + _length;
+	}
+
+	/** Get a const iterator to the start of the reversed sequence.
+	 * @return the reverse iterator
+	 */
+	const_reverse_iterator rbegin() const {
+		return const_reverse_iterator(end());
+	}
+
+	/** Get a const iterator to the start of the reversed sequence (alias).
+	 * @return the reverse iterator
+	 */
+	const_reverse_iterator crbegin() const {
+		return const_reverse_iterator(end());
+	}
+
+	/** Get a const iterator to the end of the reversed sequence.
+	 * @return the reverse iterator
+	 */
+	const_reverse_iterator rend() const {
+		return const_reverse_iterator(begin());
+	}
+
+	/** Get a const iterator to the end of the reversed sequence (alias).
+	 * @return the reverse iterator
+	 */
+	const_reverse_iterator crend() const {
+		return const_reverse_iterator(begin());
 	}
 
 	/** Get a single octet (unchecked).
