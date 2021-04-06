@@ -282,6 +282,16 @@ public:
 	void remove_suffix(size_type count) {
 		_length -= count;
 	}
+
+	/** Construct a substring.
+	 * If the requested substring would extend beyond the end of the
+	 * available octets then its length is reduced accordingly.
+	 * @param index the index of the first octet
+	 * @param length the number of octets
+	 */
+	string substr(size_type index, size_type length = npos) const {
+		return string(*this, index, length);
+	}
 };
 
 /** Write an octet string as hex to an output stream.
