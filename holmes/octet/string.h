@@ -267,6 +267,21 @@ public:
 	size_type size() const {
 		return _length;
 	}
+
+	/** Remove octets from start of string (unchecked).
+	 * @param count the number of octets to remove
+	 */
+	void remove_prefix(size_type count) {
+		_data += count;
+		_length -= count;
+	}
+
+	/** Remove octets from end of string (unchecked).
+	 * @param count the number of octets to remove
+	 */
+	void remove_suffix(size_type count) {
+		_length -= count;
+	}
 };
 
 /** Write an octet string as hex to an output stream.
