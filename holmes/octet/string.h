@@ -305,6 +305,289 @@ public:
  */
 std::ostream& operator<<(std::ostream& out, const string& octets);
 
+/** Get an unsigned 8-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint8_t get_uint8(const string& octets, string::size_type index) {
+	return octets.at(index);
+}
+
+/** Get an unsigned 16-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint16_t get_uint16(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(index + 1);
+	auto data = octets.data() + index;
+	byte_order &= 1;
+	uint16_t result = data[0 ^ byte_order];
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	return result;
+}
+
+/** Get an unsigned 32-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint32_t get_uint32(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(3);
+	byte_order &= 3;
+	auto data = octets.data() + index;
+	uint32_t result = data[0 ^ byte_order];
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	result <<= 8;
+	result |= data[2 ^ byte_order];
+	result <<= 8;
+	result |= data[3 ^ byte_order];
+	return result;
+}
+
+/** Get an unsigned 64-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint64_t get_uint64(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(7);
+	byte_order &= 7;
+	auto data = octets.data() + index;
+	uint64_t result = data[0 ^ byte_order];
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	result <<= 8;
+	result |= data[2 ^ byte_order];
+	result <<= 8;
+	result |= data[3 ^ byte_order];
+	result <<= 8;
+	result |= data[4 ^ byte_order];
+	result <<= 8;
+	result |= data[5 ^ byte_order];
+	result <<= 8;
+	result |= data[6 ^ byte_order];
+	result <<= 8;
+	result |= data[7 ^ byte_order];
+	return result;
+}
+
+/** Get a signed 8-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int8_t get_int8(const string& octets, string::size_type index) {
+	// An int16_t is needed here because the intermediate result
+	// would be too large to fit into an int8_t.
+	int16_t result = octets.at(index);
+	result = (result & 0x7f) - (result & 0x80);
+	return result;
+}
+
+/** Get a signed 16-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int16_t get_int16(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(1);
+	byte_order &= 1;
+	auto data = octets.data() + index;
+	int16_t result = data[0 ^ byte_order];
+	result = (result & 0x7f) - (result & 0x80);
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	return result;
+}
+
+/** Get a signed 32-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int32_t get_int32(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(3);
+	byte_order &= 3;
+	auto data = octets.data() + index;
+	int32_t result = data[0 ^ byte_order];
+	result = (result & 0x7f) - (result & 0x80);
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	result <<= 8;
+	result |= data[2 ^ byte_order];
+	result <<= 8;
+	result |= data[3 ^ byte_order];
+	return result;
+}
+
+/** Get a signed 64-bit integer from an octet string.
+ * @param octets the octet string
+ * @param index an index into the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int64_t get_int64(const string& octets,
+	string::size_type index, unsigned int byte_order = 0) {
+
+	octets.at(7);
+	byte_order &= 7;
+	auto data = octets.data() + index;
+	int64_t result = data[0 ^ byte_order];
+	result = (result & 0x7f) - (result & 0x80);
+	result <<= 8;
+	result |= data[1 ^ byte_order];
+	result <<= 8;
+	result |= data[2 ^ byte_order];
+	result <<= 8;
+	result |= data[3 ^ byte_order];
+	result <<= 8;
+	result |= data[4 ^ byte_order];
+	result <<= 8;
+	result |= data[5 ^ byte_order];
+	result <<= 8;
+	result |= data[6 ^ byte_order];
+	result <<= 8;
+	result |= data[7 ^ byte_order];
+	return result;
+}
+
+/** Read an unsigned 8-bit integer from an octet string.
+ * @param octets the octet string
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint8_t read_uint8(string& octets) {
+	auto result = get_uint8(octets, 0);
+	octets.remove_prefix(1);
+	return result;
+}
+
+/** Read a signed 8-bit integer from an octet string.
+ * @param octets the octet string
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int8_t read_int8(string& octets) {
+	auto result = get_int8(octets, 0);
+	octets.remove_prefix(1);
+	return result;
+}
+
+/** Read an unsigned 16-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint16_t read_uint16(string& octets, unsigned int byte_order = 0) {
+	auto result = get_uint16(octets, 0, byte_order);
+	octets.remove_prefix(2);
+	return result;
+}
+
+/** Read a signed 16-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int16_t read_int16(string& octets, unsigned int byte_order = 0) {
+	auto result = get_int16(octets, 0, byte_order);
+	octets.remove_prefix(2);
+	return result;
+}
+
+/** Read an unsigned 32-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint32_t read_uint32(string& octets, unsigned int byte_order = 0) {
+	auto result = get_uint32(octets, 0, byte_order);
+	octets.remove_prefix(4);
+	return result;
+}
+
+/** Read a signed 32-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int32_t read_int32(string& octets, unsigned int byte_order = 0) {
+	auto result = get_int32(octets, 0, byte_order);
+	octets.remove_prefix(4);
+	return result;
+}
+
+/** Read an unsigned 64-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline uint64_t read_uint64(string& octets, unsigned int byte_order = 0) {
+	auto result = get_uint64(octets, 0, byte_order);
+	octets.remove_prefix(8);
+	return result;
+}
+
+/** Read a signed 64-bit integer from an octet string.
+ * @param octets the octet string
+ * @param byte_order a byte order mask
+ * @throws std::out_of_range if the octet string is not long enough to
+ *  fulfil the request
+ * @return the integer that was read
+ */
+inline int64_t read_int64(string& octets, unsigned int byte_order = 0) {
+	auto result = get_int64(octets, 0, byte_order);
+	octets.remove_prefix(8);
+	return result;
+}
+
 } /* namespace holmes::octet */
 
 #endif
