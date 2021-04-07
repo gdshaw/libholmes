@@ -588,6 +588,18 @@ inline int64_t read_int64(string& octets, unsigned int byte_order = 0) {
 	return result;
 }
 
+/** Read a given number of octets from an octet string.
+ * If the octet string is not long enough to fulfil the request then all
+ * available octets are returned.
+ * @param octets the octet string
+ * @param count the number of octets to read
+ */
+inline octet::string read(string& octets, string::size_type count) {
+	auto result = octets.substr(0, count);
+	octets.remove_prefix(result.length());
+	return result;
+}
+
 } /* namespace holmes::octet */
 
 #endif
