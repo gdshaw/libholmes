@@ -30,6 +30,10 @@ private:
 	 */
 	std::atomic_size_t _refcount = 1;
 public:
+	buffer() = default;
+	buffer(const buffer&) = delete;
+	buffer& operator=(const buffer&) = delete;
+
 	/** Destroy octet buffer.
 	 * If any special action is required to dispose of shared content once
 	 * there are no more references to it, then this destructor must be

@@ -40,7 +40,9 @@ private:
 	std::ios_base::fmtflags _flags;
 	char _fill;
 public:
-	hex_format(std::ostream& out);
+	explicit hex_format(std::ostream& out);
+	hex_format(const hex_format&) = delete;
+	hex_format& operator=(const hex_format&) = delete;
 	~hex_format();
 };
 
