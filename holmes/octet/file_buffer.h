@@ -33,7 +33,7 @@ public:
 	~file_buffer() override;
 
 	unsigned char* data() override {
-		return reinterpret_cast<unsigned char*>(_data);
+		return static_cast<unsigned char*>(_data);
 	}
 
 	/** Get the length of the mapped file.
