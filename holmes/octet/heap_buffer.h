@@ -6,6 +6,8 @@
 #ifndef HOLMES_OCTET_HEAP_BUFFER
 #define HOLMES_OCTET_HEAP_BUFFER
 
+#include <stdexcept>
+
 #include "holmes/octet/buffer.h"
 
 namespace holmes::octet {
@@ -26,7 +28,11 @@ public:
 	 * @param capacity the required buffer capacity, in octets
 	 */
 	void* operator new(size_t instance_size, size_t capacity) {
-		return malloc(instance_size + capacity);
+		if (void* p = malloc(instance_size + capacity)) {
+			return p;
+		} else {
+			throw std::bad_alloc();
+		}
 	}
 
 	/** Deallocate heap buffer.
