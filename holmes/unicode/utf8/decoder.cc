@@ -51,6 +51,9 @@ uint32_t decoder::operator()() {
 	if ((value >= 0xd800) && (value < 0xe000)) {
 		throw parse_error("surrogate in UTF-8");
 	}
+	if (value >= 0x10ffff) {
+		throw parse_error("invalid UTF-8");
+	}
 	return value;
 }
 

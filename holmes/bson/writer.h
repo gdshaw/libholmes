@@ -53,6 +53,13 @@ void write_int32(writer& bw, int32_t value);
  */
 void write_int64(writer& bw, int64_t value);
 
+/** Write a given number of octets to a bson::writer.
+ * @param bw the bson::writer to receive the data
+ * @param data the octets to be written
+ * @param count the number of octets to be written
+ */
+void write(writer& bw, const void* data, size_t count);
+
 } /* namespace holmes::bson */
 
 #endif

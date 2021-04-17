@@ -3,6 +3,7 @@
 // Distribution and modification are permitted within the terms of the
 // GNU General Public License (version 3 or any later version).
 
+#include <cstring>
 #include <stdexcept>
 
 #include "holmes/bson/writer.h"
@@ -41,6 +42,11 @@ void write_int64(writer& bw, int64_t value) {
 	buffer[5] = value >> 40;
 	buffer[6] = value >> 48;
 	buffer[7] = value >> 56;
+}
+
+void write(writer& bw, const void* data, size_t count) {
+    auto buffer = bw.write(count);
+    std::memcpy(buffer, data, count);
 }
 
 } /* namespace holmes::bson */
