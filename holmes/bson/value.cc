@@ -6,11 +6,21 @@
 #include <stdexcept>
 
 #include "holmes/bson/value.h"
+#include "holmes/bson/null.h"
 
 namespace holmes::bson {
 
+bool value::is_null() const {
+	return false;
+}
+
 std::unique_ptr<value> value::decode(unsigned char type, octet::string& bd) {
-	throw std::invalid_argument("unsupported BSON type code");
+	switch (type) {
+	case 0x0a:
+		return std::make_unique<null>();
+	default:
+		throw std::invalid_argument("unsupported BSON type code");
+	}
 }
 
 } /* namespace holmes::bson */

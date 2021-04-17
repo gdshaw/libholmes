@@ -36,6 +36,11 @@ public:
 	 */
 	virtual size_t length() const = 0;
 
+	/** Test whether this value is null.
+	 * @return true if null, otherwise false
+	 */
+	virtual bool is_null() const;
+
 	/** Encode this value as BSON.
 	 * @param bw a writer object to receive the BSON
 	 */
