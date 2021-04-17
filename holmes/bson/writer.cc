@@ -23,4 +23,24 @@ void write_uint8(writer& bw, uint8_t value) {
 	bw.write(1)[0] = value;
 }
 
+void write_int32(writer& bw, int32_t value) {
+	auto buffer = bw.write(4);
+	buffer[0] = value >> 0;
+	buffer[1] = value >> 8;
+	buffer[2] = value >> 16;
+	buffer[3] = value >> 24;
+}
+
+void write_int64(writer& bw, int64_t value) {
+	auto buffer = bw.write(8);
+	buffer[0] = value >> 0;
+	buffer[1] = value >> 8;
+	buffer[2] = value >> 16;
+	buffer[3] = value >> 24;
+	buffer[4] = value >> 32;
+	buffer[5] = value >> 40;
+	buffer[6] = value >> 48;
+	buffer[7] = value >> 56;
+}
+
 } /* namespace holmes::bson */

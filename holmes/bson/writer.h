@@ -41,6 +41,18 @@ public:
  */
 void write_uint8(writer& bw, uint8_t value);
 
+/* Write a signed 32-bit integer to a bson::writer.
+ * @param bw the bson::writer to receive the data
+ * @param value the value to be written
+ */
+void write_int32(writer& bw, int32_t value);
+
+/** Write a signed 64-bit integer to a bson::writer.
+ * @param bw the bson::writer to receive the data
+ * @param value the value to be written
+ */
+void write_int64(writer& bw, int64_t value);
+
 } /* namespace holmes::bson */
 
 #endif
