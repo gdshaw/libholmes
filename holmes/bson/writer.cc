@@ -19,4 +19,8 @@ unsigned char* writer::write(size_t count) {
 	return buffer;
 }
 
+void write_uint8(writer& bw, uint8_t value) {
+	bw.write(1)[0] = value;
+}
+
 } /* namespace holmes::bson */

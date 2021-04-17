@@ -7,6 +7,7 @@
 #define HOLMES_BSON_WRITER
 
 #include <cstddef>
+#include <cstdint>
 
 namespace holmes::bson {
 
@@ -33,6 +34,12 @@ public:
 	 */
 	unsigned char* write(size_t count);
 };
+
+/* Write an unsigned 8-bit integer to a bson::writer.
+ * @param bw the bson::writer to receive the data
+ * @param value the value to be written
+ */
+void write_uint8(writer& bw, uint8_t value);
 
 } /* namespace holmes::bson */
 
