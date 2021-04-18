@@ -7,6 +7,7 @@
 
 #include "holmes/bson/value.h"
 #include "holmes/bson/string.h"
+#include "holmes/bson/binary.h"
 #include "holmes/bson/boolean.h"
 #include "holmes/bson/null.h"
 #include "holmes/bson/int32.h"
@@ -22,6 +23,8 @@ std::unique_ptr<value> value::decode(unsigned char type, octet::string& bd) {
 	switch (type) {
 	case 0x02:
 		return bson::string::decode(bd);
+	case 0x05:
+		return bson::binary::decode(bd);
 	case 0x08:
 		return bson::boolean::decode(bd);
 	case 0x0a:
