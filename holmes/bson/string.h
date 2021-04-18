@@ -24,16 +24,17 @@ public:
 	 */
 	explicit string(const std::string& value);
 
+	/** Decode from an octet string.
+	 * @param bd the BSON data to be decoded
+	 * @param dec a flag to trigger decoding
+	 */
+	explicit string(octet::string& bd, const decode& dec);
+
 	std::unique_ptr<value> clone() const override;
 	unsigned char type() const override;
 	size_t length() const override;
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
-
-	/** Decode instance from octet string.
-	 * @param bd the BSON data to be decoded
-	 */
-	static std::unique_ptr<string> decode(octet::string& bd);
 };
 
 } /* namespace holmes::bson */

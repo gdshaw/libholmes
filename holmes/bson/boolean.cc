@@ -11,6 +11,14 @@ namespace holmes::bson {
 boolean::boolean(bool value):
 	_value(value) {}
 
+boolean::boolean(octet::string& bd, const value::decode& dec):
+	_value(read_uint8(bd)) {
+
+	if ((_value & ~1) != 0) {
+		throw std::invalid_argument("invalid encoding for BSON boolean");
+	}
+}
+
 std::unique_ptr<value> boolean::clone() const {
 	return std::make_unique<boolean>(*this);
 }
@@ -29,14 +37,6 @@ void boolean::encode(writer& bw) const {
 
 std::string boolean::to_json() const {
 	return (_value) ? "true" : "false";
-}
-
-std::unique_ptr<boolean> boolean::decode(octet::string& bd) {
-	uint8_t value = read_uint8(bd);
-	if ((value & ~1) != 0) {
-		throw std::invalid_argument("invalid encoding for BSON boolean");
-	}
-	return std::make_unique<boolean>(value);
 }
 
 } /* namespace holmes::bson */

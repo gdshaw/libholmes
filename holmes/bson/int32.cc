@@ -11,6 +11,9 @@ namespace holmes::bson {
 int32::int32(int32_t value):
 	_value(value) {}
 
+int32::int32(octet::string& bd, const value::decode& dec):
+	_value(read_int32(bd, -1)) {}
+
 std::unique_ptr<value> int32::clone() const {
 	return std::make_unique<int32>(*this);
 }
@@ -29,10 +32,6 @@ void int32::encode(writer& bw) const {
 
 std::string int32::to_json() const {
 	return std::to_string(_value);
-}
-
-std::unique_ptr<int32> int32::decode(octet::string& bd) {
-	return std::make_unique<int32>(read_int32(bd, -1));
 }
 
 } /* namespace holmes::bson */

@@ -16,6 +16,21 @@ namespace holmes::bson {
 string::string(const std::string& value):
 	_value(value) {}
 
+string::string(octet::string& bd, const value::decode& dec) {
+	int32_t length = read_int32(bd, -1);
+	if (length < 1) {
+		throw std::invalid_argument("invalid length in BSON string");
+	}
+	bd.at(length - 1);
+	octet::string content = read(bd, length);
+	if (content[length - 1] != 0) {
+		throw std::invalid_argument("missing terminator in BSON string");
+	}
+	_value.assign(
+		reinterpret_cast<const char*>(content.data()),
+		length - 1);
+}
+
 std::unique_ptr<value> string::clone() const {
 	return std::make_unique<string>(*this);
 }
@@ -111,21 +126,6 @@ std::string string::to_json() const {
 	}
 	result.push_back('"');
 	return result;
-}
-
-std::unique_ptr<string> string::decode(octet::string& bd) {
-	int32_t length = read_int32(bd, -1);
-	if (length < 1) {
-		throw std::invalid_argument("invalid length in BSON string");
-	}
-	bd.at(length - 1);
-	octet::string content = read(bd, length);
-	if (content[length - 1] != 0) {
-		throw std::invalid_argument("missing terminator in BSON string");
-	}
-	std::string value(reinterpret_cast<const char*>(content.data()),
-		length - 1);
-	return std::make_unique<string>(value);
 }
 
 } /* namespace holmes::bson */

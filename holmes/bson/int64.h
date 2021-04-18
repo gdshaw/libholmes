@@ -24,6 +24,12 @@ public:
 	 */
 	explicit int64(int64_t value);
 
+	/** Decode from an octet string.
+	 * @param bd the BSON data to be decoded
+	 * @param dec a flag to trigger decoding
+	 */
+	explicit int64(octet::string& bd, const decode& dec);
+
 	std::unique_ptr<value> clone() const override;
 	unsigned char type() const override;
 	size_t length() const override;
@@ -36,11 +42,6 @@ public:
 	int64_t as_int64() const {
 		return _value;
 	}
-
-	/** Decode instance from octet string.
-	 * @param bd the BSON data to be decoded
-	 */
-	static std::unique_ptr<int64> decode(octet::string& bd);
 };
 
 } /* namespace holmes::bson */

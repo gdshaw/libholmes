@@ -15,10 +15,14 @@
 namespace holmes::bson {
 
 class writer;
+class any;
 
 /** An abstract base class to represent a BSON value of any type. */
 class value {
 public:
+	/** A class for requesting that an octet::string be decoded as BSON. */
+	class decode {};
+
 	virtual ~value() = default;
 
 	/** Make a copy of this BSON value with the same dynamic type.
@@ -50,14 +54,6 @@ public:
 	 * @return the encoded value
 	 */
 	virtual std::string to_json() const = 0;
-
-	/** Decode a value from an octet string.
-	 * @param type the required object type
-	 * @param bd the BSON data to be decoded
-	 * @return the resulting BSON value
-	 */
-	static std::unique_ptr<value> decode(unsigned char type,
-		octet::string& bd);
 };
 
 } /* namespace holmes::bson */

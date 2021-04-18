@@ -11,6 +11,9 @@ namespace holmes::bson {
 int64::int64(int64_t value):
 	_value(value) {}
 
+int64::int64(octet::string& bd, const value::decode& dec):
+	_value(read_int64(bd, -1)) {}
+
 std::unique_ptr<value> int64::clone() const {
 	return std::make_unique<int64>(*this);
 }
@@ -29,10 +32,6 @@ void int64::encode(writer& bw) const {
 
 std::string int64::to_json() const {
 	return std::to_string(_value);
-}
-
-std::unique_ptr<int64> int64::decode(octet::string& bd) {
-	return std::make_unique<int64>(read_int64(bd, -1));
 }
 
 } /* namespace holmes::bson */

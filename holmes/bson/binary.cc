@@ -12,6 +12,19 @@ namespace holmes::bson {
 binary::binary(const octet::string& value):
 	_value(value) {}
 
+binary::binary(octet::string& bd, const value::decode& dec) {
+	int32_t length = read_int32(bd, -1);
+	if (length < 0) {
+		throw std::invalid_argument("invalid length in BSON binary data");
+	}
+	unsigned char subtype = read_uint8(bd);
+	if (subtype != 0) {
+		throw std::invalid_argument(
+			"unsupported subtype in BSON binary data");
+	}
+	_value = read(bd, length);
+}
+
 std::unique_ptr<value> binary::clone() const {
 	return std::make_unique<binary>(*this);
 }
@@ -36,20 +49,6 @@ std::string binary::to_json() const {
 	result.append(octet::base64::encoder()(_value, true));
 	result.append("\",\"subtype\":\"0\"}}");
 	return result;
-}
-
-std::unique_ptr<binary> binary::decode(octet::string& bd) {
-	int32_t length = read_int32(bd, -1);
-	if (length < 0) {
-		throw std::invalid_argument("invalid length in BSON binary data");
-	}
-	unsigned char subtype = read_uint8(bd);
-	if (subtype != 0) {
-		throw std::invalid_argument(
-			"unsupported subtype in BSON binary data");
-	}
-	octet::string value = read(bd, length);
-	return std::make_unique<binary>(value);
 }
 
 } /* namespace holmes::bson */

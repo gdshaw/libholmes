@@ -45,8 +45,8 @@ void write_int64(writer& bw, int64_t value) {
 }
 
 void write(writer& bw, const void* data, size_t count) {
-    auto buffer = bw.write(count);
-    std::memcpy(buffer, data, count);
+	auto buffer = bw.write(count);
+	std::memcpy(buffer, data, count);
 }
 
 } /* namespace holmes::bson */

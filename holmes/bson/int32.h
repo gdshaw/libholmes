@@ -24,6 +24,13 @@ public:
 	 */
 	explicit int32(int32_t value);
 
+	/** Decode from an octet string.
+	 * This function is intended for use by bson::any.
+	 * @param bd the BSON data to be decoded
+	 * @param dec a flag to trigger decoding
+	 */
+	explicit int32(octet::string& bd, const decode& dec);
+
 	std::unique_ptr<value> clone() const override;
 	unsigned char type() const override;
 	size_t length() const override;
@@ -36,11 +43,6 @@ public:
 	int32_t as_int32() const {
 		return _value;
 	}
-
-	/** Decode instance from octet string.
-	 * @param bd the BSON data to be decoded
-	 */
-	static std::unique_ptr<int32> decode(octet::string& bd);
 };
 
 } /* namespace holmes::bson */
