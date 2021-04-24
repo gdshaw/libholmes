@@ -64,4 +64,12 @@ std::string any::to_json() const {
 	return _ptr->to_json();
 }
 
+any& any::at(const std::string& name) {
+	return _ptr->at(name);
+}
+
+const any& any::at(const std::string& name) const {
+	return _ptr->at(name);
+}
+
 } /* namespace holmes::bson */

@@ -600,6 +600,11 @@ inline octet::string read(string& octets, string::size_type count) {
 	return result;
 }
 
+/** Read a null-terminated string from an octet string.
+ * @return the resulting string
+ */
+std::string read_cstring(string& octets);
+
 } /* namespace holmes::octet */
 
 #endif

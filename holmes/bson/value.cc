@@ -13,4 +13,12 @@ bool value::is_null() const {
 	return false;
 }
 
+any& value::at(const std::string& name) {
+	throw std::runtime_error("BSON value does not support indexing by string");
+}
+
+const any& value::at(const std::string& name) const {
+	throw std::runtime_error("BSON value does not support indexing by string");
+}
+
 } /* namespace holmes::bson */

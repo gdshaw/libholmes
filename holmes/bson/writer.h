@@ -60,6 +60,12 @@ void write_int64(writer& bw, int64_t value);
  */
 void write(writer& bw, const void* data, size_t count);
 
+/** Write a null-terminated string to a bson::writer.
+ * @param bw the bson::writer to receive the data
+ * @param value the value to be written
+ */
+void write_cstring(writer& bw, const char* value);
+
 } /* namespace holmes::bson */
 
 #endif

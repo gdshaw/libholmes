@@ -49,4 +49,9 @@ void write(writer& bw, const void* data, size_t count) {
 	std::memcpy(buffer, data, count);
 }
 
+void write_cstring(writer& bw, const char* value) {
+	write(bw, value, strlen(value));
+	write_uint8(bw, 0);
+}
+
 } /* namespace holmes::bson */

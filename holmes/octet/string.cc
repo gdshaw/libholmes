@@ -4,6 +4,7 @@
 // GNU General Public License (version 3 or any later version).
 
 #include <cstring>
+#include <stdexcept>
 #include <iomanip>
 
 #include "holmes/octet/heap_buffer.h"
@@ -67,6 +68,19 @@ std::ostream& operator<<(std::ostream& out, const string& octets) {
 		out << (octet & 0xff);
 	}
 	return out;
+}
+
+std::string read_cstring(string& octets) {
+	auto f = static_cast<const unsigned char*>(
+		std::memchr(octets.data(), 0, octets.length()));
+	if (!f) {
+		throw std::out_of_range("out of range");
+	}
+	size_t count = f - octets.data();
+
+	std::string result(octets.begin(), octets.begin() + count);
+	octets.remove_prefix(count + 1);
+	return result;
 }
 
 } /* namespace holmes::octet */

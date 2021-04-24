@@ -54,6 +54,22 @@ public:
 	 * @return the encoded value
 	 */
 	virtual std::string to_json() const = 0;
+
+	/** Get the single member corresponding to a given name.
+	 * If this value is not a document then no name will match.
+	 * @param name the name of the member
+	 * @return the value of the member
+	 * @throws std::out_of_range unless there is exactly one match
+	 */
+	virtual any& at(const std::string& name);
+
+	/** Get the single member corresponding to a given name.
+	 * If this value is not a document then no name will match.
+	 * @param name the name of the member
+	 * @return the value of the member
+	 * @throws std::out_of_range unless there is exactly one match
+	 */
+	virtual const any& at(const std::string& name) const;
 };
 
 } /* namespace holmes::bson */

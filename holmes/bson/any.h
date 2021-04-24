@@ -127,6 +127,9 @@ public:
 	bool is_null() const override;
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
+
+	any& at(const std::string& name) override;
+	const any& at(const std::string& name) const override;
 };
 
 } /* namespace holmes::bson */
