@@ -70,6 +70,22 @@ public:
 	 * @throws std::out_of_range unless there is exactly one match
 	 */
 	virtual const any& at(const std::string& name) const;
+
+	/** Get the value corresponding to a given numeric index.
+	 * If this value is not an array then no index will match.
+	 * @param name the name of the member
+	 * @return the value of the member
+	 * @throws std::out_of_range if there is no member with that index
+	 */
+	virtual any& at(size_t index);
+
+	/** Get the value corresponding to a given numeric index.
+	 * If this value is not an array then no index will match.
+	 * @param name the index of the member
+	 * @return the value of the member
+	 * @throws std::out_of_range if there is no member with that index
+	 */
+	virtual const any& at(size_t index) const;
 };
 
 } /* namespace holmes::bson */

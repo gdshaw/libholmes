@@ -21,4 +21,12 @@ const any& value::at(const std::string& name) const {
 	throw std::runtime_error("BSON value does not support indexing by string");
 }
 
+any& value::at(size_t index) {
+	throw std::runtime_error("BSON value does not support indexing by integer");
+}
+
+const any& value::at(size_t index) const {
+	throw std::runtime_error("BSON value does not support indexing by integer");
+}
+
 } /* namespace holmes::bson */
