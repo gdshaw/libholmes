@@ -4,6 +4,8 @@
 // GNU General Public License (version 3 or any later version).
 
 #include "holmes/bson/string.h"
+#include "holmes/bson/document.h"
+#include "holmes/bson/array.h"
 #include "holmes/bson/binary.h"
 #include "holmes/bson/boolean.h"
 #include "holmes/bson/null.h"
@@ -19,6 +21,12 @@ any::any(unsigned char type, octet::string& bd) {
 	switch (type) {
 	case 0x02:
 		_ptr = new bson::string(bd, decode());
+		break;
+	case 0x03:
+		_ptr = new bson::document(bd, decode());
+		break;
+	case 0x04:
+		_ptr = new bson::array(bd, decode());
 		break;
 	case 0x05:
 		_ptr = new bson::binary(bd, decode());
