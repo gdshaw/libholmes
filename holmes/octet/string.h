@@ -288,6 +288,15 @@ public:
 		_length -= count;
 	}
 
+	/** Swap content with another octet string.
+	 * @param that the octet string with which to swap
+	 */
+	void swap(string& that) {
+		std::swap(this->_buffer, that._buffer);
+		std::swap(this->_data, that._data);
+		std::swap(this->_length, that._length);
+	}
+
 	/** Construct a substring.
 	 * If the requested substring would extend beyond the end of the
 	 * available octets then its length is reduced accordingly.
