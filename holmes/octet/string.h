@@ -133,6 +133,11 @@ public:
 	 */
 	string(const_pointer data, size_type length);
 
+	/** Construct an octet string by copying from a std::basic_string.
+	 * @param that the std::basic_string from which to copy
+	 */
+	string(const std::basic_string<unsigned char>& that);
+
 	/** Destroy this octet string. */
 	~string() {
 		buffer::unlink(*_buffer);

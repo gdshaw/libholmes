@@ -35,6 +35,14 @@ string::string(const unsigned char* data, size_type length):
 	std::memcpy(_buffer->data(), data, length);
 }
 
+string::string(const std::basic_string<unsigned char>& that):
+	_buffer(new(that.length()) heap_buffer),
+	_data(_buffer->data()),
+	_length(that.length()) {
+
+	that.copy(_buffer->data(), that.npos);
+}
+
 class hex_format {
 private:
 	std::ostream* _out;
