@@ -36,6 +36,19 @@ public:
 	/** The type of a const reference to a member. */
 	typedef const value_type& const_reference;
 
+	/** The type of an iterator. */
+	typedef std::vector<value_type>::iterator iterator;
+
+	/** The type of a const iterator. */
+	typedef std::vector<value_type>::const_iterator const_iterator;
+
+	/** The type of a reverse iterator. */
+	typedef std::vector<value_type>::reverse_iterator reverse_iterator;
+
+	/** The type of a const reverse iterator. */
+	typedef std::vector<value_type>::const_reverse_iterator
+		const_reverse_iterator;
+
 	/** A type to represent the number of members. */
 	typedef std::vector<value_type>::size_type size_type;
 
@@ -53,6 +66,90 @@ public:
 
 	any& at(size_t index) override;
 	const any& at(size_t index) const override;
+
+	/** Get an iterator to the start of this array.
+	 * @return the iterator
+	 */
+	iterator begin() {
+		return _members.begin();
+	}
+
+	/** Get a const iterator to the start of this array.
+	 * @return the iterator
+	 */
+	const_iterator begin() const {
+		return _members.begin();
+	}
+
+	/** Get a const iterator to the start of this array.
+	 * @return the iterator
+	 */
+	const_iterator cbegin() const {
+		return _members.cbegin();
+	}
+
+	/** Get an iterator to the end of this array.
+	 * @return the iterator
+	 */
+	iterator end() {
+		return _members.end();
+	}
+
+	/** Get a const iterator to the end of this array.
+	 * @return the iterator
+	 */
+	const_iterator end() const {
+		return _members.end();
+	}
+
+	/** Get a const iterator to the end of this array.
+	 * @return the iterator
+	 */
+	const_iterator cend() const {
+		return _members.cend();
+	}
+
+	/** Get a reverse iterator to the end of this array.
+	 * @return the iterator
+	 */
+	reverse_iterator rbegin() {
+		return _members.rbegin();
+	}
+
+	/** Get a const reverse iterator to the end of this array.
+	 * @return the iterator
+	 */
+	const_reverse_iterator rbegin() const {
+		return _members.rbegin();
+	}
+
+	/** Get a const reverse iterator to the end of this array.
+	 * @return the iterator
+	 */
+	const_reverse_iterator crbegin() const {
+		return _members.crbegin();
+	}
+
+	/** Get a reverse iterator to the start of this array.
+	 * @return the iterator
+	 */
+	reverse_iterator rend() {
+		return _members.rend();
+	}
+
+	/** Get a const reverse iterator to the start of this array.
+	 * @return the iterator
+	 */
+	const_reverse_iterator rend() const {
+		return _members.rend();
+	}
+
+	/** Get a const reverse iterator to the start of this array.
+	 * @return the iterator
+	 */
+	const_reverse_iterator crend() const {
+		return _members.crend();
+	}
 
 	/** Get the number of members of this array.
 	 * @return the number of members
