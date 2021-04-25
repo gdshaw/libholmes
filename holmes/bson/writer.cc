@@ -50,8 +50,9 @@ void write(writer& bw, const void* data, size_t count) {
 }
 
 void write_cstring(writer& bw, const char* value) {
-	write(bw, value, strlen(value));
-	write_uint8(bw, 0);
+	size_t len = strlen(value);
+	auto buffer = bw.write(len + 1);
+	std::memcpy(buffer, value, len + 1);
 }
 
 } /* namespace holmes::bson */
