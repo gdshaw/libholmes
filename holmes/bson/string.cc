@@ -64,8 +64,6 @@ std::string string::to_json() const {
 	unicode::utf8::decoder decoder(octets);
 	while (decoder) {
 		uint32_t cp = decoder();
-		std::cout << std::hex << cp << std::dec << "\n";
-
 		if (cp < 0x20) {
 			switch (cp) {
 			case '\b':
