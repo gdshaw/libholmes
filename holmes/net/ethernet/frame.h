@@ -10,13 +10,14 @@
 #include <cstdint>
 
 #include "holmes/octet/string.h"
-#include "holmes/bson/document.h"
+#include "holmes/artefact.h"
 #include "holmes/net/ethernet/address.h"
 
 namespace holmes::net::ethernet {
 
 /** A class to represent an Ethernet frame. */
-class frame {
+class frame:
+	public artefact {
 private:
 	/** The raw content of this frame. */
 	octet::string _data;
@@ -73,10 +74,7 @@ public:
 		return _data.substr(14);
 	}
 
-	/** Express the content of this Ethernet frame as BSON.
-	 * @return the resulting BSON document.
-	 */
-	virtual bson::document to_bson() const;
+	bson::document to_bson() const override;
 };
 
 } /* namespace holmes::net::ethernet */
