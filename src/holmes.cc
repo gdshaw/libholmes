@@ -22,6 +22,10 @@ void write_help(std::ostream& out) {
 	out << std::endl;
 	out << "  -h  display this help text then exit" << std::endl;
 	out << "  -V  display version number then exit" << std::endl;
+	out << std::endl;
+	out << "Commands:" << std::endl;
+	out << std::endl;
+	out << "  decode   decode network traffic" << std::endl;
 }
 
 /** Print version information.
