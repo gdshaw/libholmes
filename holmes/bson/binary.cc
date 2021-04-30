@@ -47,7 +47,7 @@ std::string binary::to_json() const {
 	std::string result;
 	result.append("{\"$binary\":{\"base64\":\"");
 	result.append(octet::base64::encoder()(_value, true));
-	result.append("\",\"subtype\":\"0\"}}");
+	result.append("\",\"subtype\":0}}");
 	return result;
 }
 
