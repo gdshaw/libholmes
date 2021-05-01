@@ -21,6 +21,7 @@ MAINBIN = bin/$(pkgname)
 AUXBIN = $(filter-out $(MAINBIN),$(BIN))
 
 HOLMES = $(wildcard holmes/*.cc) $(wildcard holmes/*/*.cc) $(wildcard holmes/*/*/*.cc)
+TESTS = $(wildcard test/*.test) $(wildcard test/*/*.test) $(wildcard test/*/*/*.test)
 
 .PHONY: all
 all: $(BIN)
@@ -54,6 +55,12 @@ install: all
 uninstall:
 	rm -f $(bindir)/$(notdir $(MAINBIN))
 	rm -rf $(libexecdir)/$(pkgname)
+
+.PHONY: test
+test: $(TESTS:%.test=%.tested)
+
+%.tested: %.test
+	test/test.py $^
 
 -include $(HOLMES:%.cc=%.d)
 -include $(SRC:%.cc=%.d)
