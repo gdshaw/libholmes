@@ -10,6 +10,7 @@
 
 #include "holmes/artefact.h"
 #include "holmes/net/ethernet/frame.h"
+#include "holmes/net/inet4/datagram.h"
 
 namespace holmes::net {
 
@@ -34,23 +35,34 @@ namespace holmes::net {
  */
 class decoder {
 protected:
+	/** Handle a decoded Ethernet frame.
+	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param ether_frame the Ethernet frame to be handled
+	 */
+	virtual void handle_ethernet(const ethernet::frame& ether_frame);
+
+	/** Handle a decoded IPv4 datagram.
+	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param inet4_dgram the datagram to be handled
+	 */
+	virtual void handle_inet4(const inet4::datagram& inet4_dgram);
+
 	/** Handle any type of decoded artefact.
 	 * If not overridden then this handler does nothing.
 	 * @param proto the name of the network protocol
 	 * @param af the artefact to be handled
 	 */
 	virtual void handle_artefact(const std::string& proto, const artefact& af);
-
-	/** Handle a decoded Ethernet frame.
-	 * If not overridden then this handler forwards to decoder::handle_artefact.
-	 * @param ether_frame the Ethernet frame to be handled
-	 */
-	virtual void handle_ethernet(const ethernet::frame& ether_frame);
 public:
 	/** Decode an Ethernet frame.
 	 * @param raw the raw data to be decoded
 	 */
 	void decode_ethernet(octet::string data);
+
+	/** Decode an IPv4 datagram.
+	 * @param raw the raw data to be decoded
+	 */
+	void decode_inet4(octet::string data);
 };
 
 } /* namespace holmes::net */
