@@ -13,6 +13,7 @@
 #include "holmes/octet/string.h"
 #include "holmes/net/inet/datagram.h"
 #include "holmes/net/inet4/address.h"
+#include "holmes/net/inet4/option.h"
 
 namespace holmes::net::inet4 {
 
@@ -20,6 +21,9 @@ namespace holmes::net::inet4 {
 class datagram:
 	public inet::datagram {
 private:
+	/** A type to represent a list of options. */
+	typedef std::vector<std::unique_ptr<option>> option_list;
+
 	/** The raw content. */
 	octet::string _data;
 
@@ -28,9 +32,17 @@ private:
 
 	/** The destination address. */
 	mutable std::unique_ptr<address> _dst_addr;
+
+	/** The list of options. */
+	mutable std::unique_ptr<option_list> _options;
+
+	/** Make the list of options.
+	 * @return the newly-created list of options
+	 */
+	std::unique_ptr<option_list> _make_options() const;
 public:
 	/** Construct IPv4 datagram.
-	 * @param data the raw content of the datagram
+	 * @param data a source of raw content
 	 */
 	explicit datagram(octet::string& data);
 
@@ -136,6 +148,16 @@ public:
 			_dst_addr = std::make_unique<address>(_data.substr(16, 4));
 		}
 		return *_dst_addr;
+	}
+
+	/** Get the list of options.
+	 * @return the list of options
+	 */
+	const option_list& options() const {
+		if (!_options) {
+			_options = _make_options();
+		}
+		return *_options;
 	}
 
 	/** Get the payload.

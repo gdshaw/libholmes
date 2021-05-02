@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import sys
-import collections
 import subprocess
 import json
 
@@ -13,13 +12,21 @@ import json
 # additional members which are not listed. Order is not significant.
 
 def compare(path, expected, observed):
-    if isinstance(expected, collections.Mapping):
+    if isinstance(expected, dict):
+        if not isinstance(observed, dict):
+            raise AssertionError('%s not an object in result' % subpath)
         for key in expected:
             subpath = '.'.join([path, key]) if path else key
             if key in observed:
                 compare(subpath, expected[key], observed[key])
             else:
                 raise AssertionError('missing %s from result' % subpath)
+    elif isinstance(expected, list):
+        if not isinstance(observed, list):
+            raise AssertionError('%s not a list in result' % subpath)
+        for index in range(0, len(expected)):
+            subpath = '.'.join([path, str(index)]) if path else str(index)
+            compare(subpath, expected[index], observed[index])
     elif observed != expected:
         raise AssertionError('mismatch at %s: expected <%s>, found <%s>' %
             (path, expected, observed))

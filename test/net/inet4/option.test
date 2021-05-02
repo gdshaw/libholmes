@@ -1,0 +1,35 @@
+{
+  "data": "UlQAzctpUlQACbuzCABHAAAkyBUAAEABDWTAqAACwKgAAR4GAQIDBAAACAC0fEOCAAE=",
+  "expected": {
+    "inet4": {
+      "ihl": 7,
+      "options": [
+        {
+          "type": 30,
+          "payload": {
+            "$binary": {
+              "base64": "AQIDBA==",
+              "subtype": 0
+            }
+          }
+        },
+        {
+          "type": 0,
+          "payload": {
+            "$binary": {
+              "base64": "",
+              "subtype": 0
+            }
+          }
+        }
+      ],
+      "payload": {
+        "$binary": {
+          "base64": "CAC0fEOCAAE=",
+          "subtype": 0
+        }
+      }
+    }
+  },
+  "command": "nping --ip-options '\\x1e\\x06\\x01\\x02\\x03\\x04\\x00\\x00' 192.168.0.1"
+}
