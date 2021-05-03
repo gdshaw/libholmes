@@ -7,6 +7,7 @@
 #include "holmes/bson/binary.h"
 #include "holmes/net/inet4/option.h"
 #include "holmes/net/inet4/end_of_option_list.h"
+#include "holmes/net/inet4/no_operation_option.h"
 
 namespace holmes::net::inet4 {
 
@@ -43,6 +44,8 @@ std::unique_ptr<option> option::parse(octet::string& data) {
 	switch (get_uint8(data, 0)) {
 	case 0:
 		return std::make_unique<end_of_option_list>(data);
+	case 1:
+		return std::make_unique<no_operation_option>(data);
 	default:
 		return std::make_unique<option>(data);
 	}
