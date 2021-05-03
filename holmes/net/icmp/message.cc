@@ -7,6 +7,7 @@
 #include "holmes/bson/binary.h"
 #include "holmes/net/inet/checksum.h"
 #include "holmes/net/icmp/message.h"
+#include "holmes/net/icmp/echo_message.h"
 
 namespace holmes::net::icmp {
 
@@ -25,8 +26,19 @@ bson::document message::to_bson() const {
 	bson::document bson_message;
 	bson_message.append("type", bson::int32(type()));
 	bson_message.append("code", bson::int32(code()));
-	bson_message.append("payload", bson::binary(payload()));
+	bson_message.append("checksum", bson_checksum);
+	bson_message.append("raw_payload", bson::binary(raw_payload()));
 	return bson_message;
+}
+
+std::unique_ptr<message> message::parse_icmp4(const octet::string& data) {
+	switch (get_uint8(data, 0)) {
+	case 0:
+	case 8:
+		return std::make_unique<echo_message>(data);
+	default:
+		return std::make_unique<message>(data);
+	}
 }
 
 } /* namespace holmes::net::icmp */

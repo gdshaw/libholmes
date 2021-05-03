@@ -4,7 +4,11 @@
     "icmp4": {
       "type": 252,
       "code": 85,
-      "payload": {
+      "checksum": {
+        "recorded": 5088,
+        "calculated": 5088
+      },
+      "raw_payload": {
         "$binary": {
           "base64": "AAAAAEUAABwObgAAQAZcWwECAwQFBgcIAAAAAAAI78E=",
           "subtype": 0

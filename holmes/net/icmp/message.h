@@ -63,14 +63,20 @@ public:
 	 */
 	uint16_t calculated_checksum() const;
 
-	/** Get the payload.
-	 * @return the payload
+	/** Get the raw payload.
+	 * @return the undecoded payload of this ICMP message
 	 */
-	octet::string payload() const {
+	octet::string raw_payload() const {
 		return _data.substr(4);
 	}
 
 	bson::document to_bson() const override;
+
+	/** Parse an ICMPv4 option.
+	 * @param data a source of raw content
+	 * @return the resulting option
+	 */
+	static std::unique_ptr<message> parse_icmp4(const octet::string& data);
 };
 
 } /* namespace holmes::net::icmp */

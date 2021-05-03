@@ -39,8 +39,8 @@ void decoder::decode_inet4(octet::string data) {
 }
 
 void decoder::decode_icmp4(octet::string data) {
-	icmp::message icmp4_msg(data);
-	handle_icmp4(icmp4_msg);
+	auto icmp4_msg = icmp::message::parse_icmp4(data);
+	handle_icmp4(*icmp4_msg);
 }
 
 } /* namespace holmes::net */
