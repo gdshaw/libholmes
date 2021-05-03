@@ -1,0 +1,16 @@
+{
+  "data": "UlQAzctpUlQACbuzCABFAAA4q/AAAEABjyp/AAABwKgAAfxVE+AAAAAARQAAHA5uAABABlxbAQIDBAUGBwgAAAAAAAjvwQ==",
+  "expected": {
+    "icmp4": {
+      "type": 252,
+      "code": 85,
+      "payload": {
+        "$binary": {
+          "base64": "AAAAAEUAABwObgAAQAZcWwECAwQFBgcIAAAAAAAI78E=",
+          "subtype": 0
+        }
+      }
+    }
+  },
+  "command": "hping3 -c 1 -C 252 -K 85 --force-icmp 192.168.0.1"
+}

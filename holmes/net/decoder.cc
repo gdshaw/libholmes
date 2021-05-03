@@ -15,6 +15,10 @@ void decoder::handle_inet4(const inet4::datagram& inet4_dgram) {
 	handle_artefact("inet4", inet4_dgram);
 }
 
+void decoder::handle_icmp4(const icmp::message& icmp4_msg) {
+	handle_artefact("icmp4", icmp4_msg);
+}
+
 void decoder::handle_artefact(const std::string& protocol,
 	const artefact& af) {}
 
@@ -29,6 +33,14 @@ void decoder::decode_ethernet(octet::string data) {
 void decoder::decode_inet4(octet::string data) {
 	inet4::datagram inet4_dgram(data);
 	handle_inet4(inet4_dgram);
+	if (inet4_dgram.protocol() == 1) {
+		decode_icmp4(inet4_dgram.payload());
+	}
+}
+
+void decoder::decode_icmp4(octet::string data) {
+	icmp::message icmp4_msg(data);
+	handle_icmp4(icmp4_msg);
 }
 
 } /* namespace holmes::net */

@@ -11,6 +11,7 @@
 #include "holmes/artefact.h"
 #include "holmes/net/ethernet/frame.h"
 #include "holmes/net/inet4/datagram.h"
+#include "holmes/net/icmp/message.h"
 
 namespace holmes::net {
 
@@ -47,6 +48,12 @@ protected:
 	 */
 	virtual void handle_inet4(const inet4::datagram& inet4_dgram);
 
+	/** Handle a decoded ICMPv4 datagram.
+	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param icmp4_msg the message to be handled
+	 */
+	virtual void handle_icmp4(const icmp::message& icmp4_msg);
+
 	/** Handle any type of decoded artefact.
 	 * If not overridden then this handler does nothing.
 	 * @param proto the name of the network protocol
@@ -63,6 +70,11 @@ public:
 	 * @param raw the raw data to be decoded
 	 */
 	void decode_inet4(octet::string data);
+
+	/** Decode an ICMPv4 datagram.
+	 * @param raw the raw data to be decoded
+	 */
+	void decode_icmp4(octet::string data);
 };
 
 } /* namespace holmes::net */
