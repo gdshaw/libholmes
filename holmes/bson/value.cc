@@ -13,6 +13,14 @@ bool value::is_null() const {
 	return false;
 }
 
+value& value::operator*() {
+	return *this;
+}
+
+const value& value::operator*() const {
+	return *this;
+}
+
 any& value::at(const std::string& name) {
 	throw std::runtime_error("BSON value does not support indexing by string");
 }

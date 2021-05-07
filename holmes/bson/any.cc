@@ -72,6 +72,14 @@ std::string any::to_json() const {
 	return _ptr->to_json();
 }
 
+value& any::operator*() {
+	return *_ptr;
+}
+
+const value& any::operator*() const {
+	return *_ptr;
+}
+
 any& any::at(const std::string& name) {
 	return _ptr->at(name);
 }

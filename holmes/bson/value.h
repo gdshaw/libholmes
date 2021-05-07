@@ -55,6 +55,54 @@ public:
 	 */
 	virtual std::string to_json() const = 0;
 
+	/** Resolve the underlying value.
+	 * If this value is a reference to another value (as in the case of a
+	 * bson::any) then return a reference to that underlying value,
+	 * otherwise return a reference to this.
+	 * @return the underlying bson::value
+	 */
+	virtual value& operator*();
+
+	/** Resolve the underlying value.
+	 * If this value is a reference to another value (as in the case of a
+	 * bson::any) then return a reference to that underlying value,
+	 * otherwise return a reference to this.
+	 * @return the underlying bson::value
+	 */
+	virtual const value& operator*() const;
+
+	/** Dynamically cast this object to a sepcific type of bson::value.
+	 * If this value is a reference to another value (as in the case of a
+	 * bson::any) then return a cast reference to that underlying value,
+	 * otherwise return a cast reference to this.
+	 * @return a cast reference to the underlying value
+	 * @throws std::bad_cast if the value is not of the expected type
+	 */
+	template<class T>
+	T& as() {
+		return dynamic_cast<T&>(**this);
+	}
+
+	/** Dynamically cast this object to a sepcific type of bson::value.
+	 * If this value is a reference to another value (as in the case of a
+	 * bson::any) then return a cast reference to that underlying value,
+	 * otherwise return a cast reference to this.
+	 * @return a cast reference to the underlying value
+	 * @throws std::bad_cast if the value is not of the expected type
+	 */
+	template<class T>
+	const T& as() const {
+		return dynamic_cast<const T&>(**this);
+	}
+
+	/** Test whether this object can be dynamically cast to a given type
+	 * @return true if it can be cast, otherwise false
+	 */
+	template<class T>
+	bool is() const {
+		return dynamic_cast<const T*>(&**this);
+	}
+
 	/** Get the single member corresponding to a given name.
 	 * If this value is not a document then no name will match.
 	 * @param name the name of the member

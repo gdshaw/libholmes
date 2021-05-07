@@ -74,7 +74,7 @@ public:
 	 * @param that the value to be copied
 	 */
 	explicit any(const value& that):
-		_ptr(that.clone().release()) {}
+		_ptr((*that).clone().release()) {}
 
 	/** Copy assign from any type of bson::value.
 	 * @param that the value to be copied
@@ -84,7 +84,7 @@ public:
 			if (_ptr != _null) {
 				delete _ptr;
 			}
-			_ptr = that.clone().release();
+			_ptr = (*that).clone().release();
 		}
 		return *this;
 	}
@@ -103,24 +103,6 @@ public:
 		}
 	}
 
-	/** Dynamically cast this object to a sepcific type of bson::value.
-	 * @return a cast reference to this
-	 * @throws std::bad_cast if the value is not of the expected type
-	 */
-	template<class T>
-	T& as() {
-		return dynamic_cast<T&>(*_ptr);
-	}
-
-	/** Dynamically cast this object to a sepcific type of bson::value.
-	 * @return a cast reference to this
-	 * @throws std::bad_cast if the value is not of the expected type
-	 */
-	template<class T>
-	const T& as() const {
-		return dynamic_cast<T&>(*_ptr);
-	}
-
 	std::unique_ptr<value> clone() const override;
 	unsigned char type() const override;
 	size_t length() const override;
@@ -128,6 +110,8 @@ public:
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
 
+	value& operator*() override;
+	const value& operator*() const override;
 	any& at(const std::string& name) override;
 	const any& at(const std::string& name) const override;
 };
