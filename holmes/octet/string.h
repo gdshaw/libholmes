@@ -306,7 +306,64 @@ public:
 	string substr(size_type index, size_type length = npos) const {
 		return string(*this, index, length);
 	}
+
+	/** Lexicographically compare with another octet string.
+	 * @param that the octet string to compare against
+	 * @return -1 if this lower, 0 if equal, +1 if greater
+	 */
+	int compare(const octet::string& that) const;
+
+	/** Lexicographically compare substring with another octet string.
+	 * @param index the index of the first octet to take from this
+	 * @param length the number of octets to take from this
+	 * @param that the octet string to compare against
+	 * @return -1 if this lower, 0 if equal, +1 if greater
+	 */
+	int compare(size_type index, size_type length,
+		const octet::string& that) const {
+
+		return substr(index, length).compare(that);
+	}
+
+	/** Lexicographically compare substring with another octet substring
+	 * @param index the index of the first octet to take from this
+	 * @param length the number of octets to take from this
+	 * @param that the octet string to compare against
+	 * @param index2 the index of the first octet to take from that
+	 * @param length2 the number of octets to take from that
+	 * @return -1 if this lower, 0 if equal, +1 if greater
+	 */
+	int compare(size_type index, size_type length,
+		const octet::string& that,
+		size_type index2, size_type length2) const {
+
+		return substr(index, length).compare(that.substr(index2, length2));
+	}
 };
+
+inline bool operator==(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) == 0;
+}
+
+inline bool operator!=(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) != 0;
+}
+
+inline bool operator<(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) < 0;
+}
+
+inline bool operator>=(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) >= 0;
+}
+
+inline bool operator<=(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) <= 0;
+}
+
+inline bool operator>(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs) > 0;
+}
 
 /** Write an octet string as hex to an output stream.
  * Each octet is converted to a pair of hex digits. Where there is a choice

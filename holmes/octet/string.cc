@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <stdexcept>
+#include <algorithm>
 #include <iomanip>
 
 #include "holmes/octet/heap_buffer.h"
@@ -41,6 +42,19 @@ string::string(const std::basic_string<unsigned char>& that):
 	_length(that.length()) {
 
 	that.copy(_buffer->data(), that.npos);
+}
+
+int string::compare(const octet::string& that) const {
+	size_t common_length = std::min(_length, that.length());
+	int result = std::memcmp(_data, that.data(), common_length);
+	if (result == 0) {
+		if (_length > common_length) {
+			result = 1;
+		} else if (that.length() > common_length) {
+			result = -1;
+		}
+	}
+	return result;
 }
 
 class hex_format {
