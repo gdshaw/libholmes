@@ -7,7 +7,10 @@
 #include "holmes/octet/pattern/any.h"
 #include "holmes/octet/pattern/fixed.h"
 #include "holmes/octet/pattern/wildcard.h"
+#include "holmes/octet/pattern/sequence.h"
+#include "holmes/bson/string.h"
 #include "holmes/bson/document.h"
+#include "holmes/bson/array.h"
 
 namespace holmes::octet::pattern {
 
@@ -22,6 +25,8 @@ any::any(const bson::value& bson_pattern) {
 		} else {
 			throw parse_error("unrecognised pattern type");
 		}
+	} else if (bson_pattern.is<bson::array>()) {
+		_pattern = std::make_unique<pattern::sequence>(bson_pattern.as<bson::array>());
 	} else {
 		throw parse_error("invalid BSON type for octet pattern.");
 	}
