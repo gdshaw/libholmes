@@ -3,30 +3,30 @@
 // Distribution and modification are permitted within the terms of the
 // GNU General Public License (version 3 or any later version).
 
-#ifndef HOLMES_OCTET_PATTERN_FIXED
-#define HOLMES_OCTET_PATTERN_FIXED
+#ifndef HOLMES_OCTET_PATTERN_WILDCARD
+#define HOLMES_OCTET_PATTERN_WILDCARD
 
 #include "holmes/bson/document.h"
 #include "holmes/octet/pattern/basic.h"
 
 namespace holmes::octet::pattern {
 
-/** An octet pattern class to match fixed content.
+/** An octet pattern class to match arbitrary content.
  * The BSON representation of this class is a document with the following
  * fields:
- * - "type": "fixed"
- * - "content": the required fixed binary content
+ * - "type": "wildcard"
+ * - "length": the number of octets to be matched
  */
-class fixed:
+class wildcard:
 	public basic {
 private:
-	/** The content to be matched. */
-	octet::string _content;
+	/** The number of octets to be matched. */
+	size_t _length;
 public:
-	/** Construct fixed pattern from BSON.
+	/** Construct wildcard pattern from BSON.
 	 * @param bson_pattern the required pattern as BSON
 	 */
-	explicit fixed(const bson::document& bson_pattern);
+	explicit wildcard(const bson::document& bson_pattern);
 
 	bool operator()(octet::string& octets) const override;
 };

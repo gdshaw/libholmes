@@ -4,7 +4,6 @@
 // GNU General Public License (version 3 or any later version).
 
 #include "holmes/parse_error.h"
-#include "holmes/bson/binary.h"
 #include "holmes/octet/pattern/fixed.h"
 
 namespace holmes::octet::pattern {
