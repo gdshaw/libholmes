@@ -35,6 +35,10 @@ public:
 	size_t length() const override;
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
+
+	operator std::string() const override {
+		return _value;
+	}
 };
 
 } /* namespace holmes::bson */

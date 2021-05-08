@@ -80,6 +80,22 @@ const value& any::operator*() const {
 	return *_ptr;
 }
 
+any::operator bool() const {
+	return _ptr->operator bool();
+}
+
+any::operator int64_t() const {
+	return _ptr->operator int64_t();
+}
+
+any::operator std::string() const {
+	return _ptr->operator std::string();
+}
+
+any::operator octet::string() const {
+	return _ptr->operator octet::string();
+}
+
 any& any::at(const std::string& name) {
 	return _ptr->at(name);
 }

@@ -37,10 +37,7 @@ public:
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
 
-	/** Get the value as an octet string.
-	 * @return the value
-	 */
-	operator octet::string() const {
+	operator octet::string() const override {
 		return _value;
 	}
 };

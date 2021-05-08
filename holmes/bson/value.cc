@@ -21,6 +21,22 @@ const value& value::operator*() const {
 	return *this;
 }
 
+value::operator bool() const {
+	throw std::bad_cast();
+}
+
+value::operator int64_t() const {
+	throw std::bad_cast();
+}
+
+value::operator std::string() const {
+	throw std::bad_cast();
+}
+
+value::operator octet::string() const {
+	throw std::bad_cast();
+}
+
 any& value::at(const std::string& name) {
 	throw std::runtime_error("BSON value does not support indexing by string");
 }

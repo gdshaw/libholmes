@@ -112,6 +112,10 @@ public:
 
 	value& operator*() override;
 	const value& operator*() const override;
+	operator bool() const override;
+	operator int64_t() const override;
+	operator std::string() const override;
+	operator octet::string() const override;
 	any& at(const std::string& name) override;
 	const any& at(const std::string& name) const override;
 };

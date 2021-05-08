@@ -36,10 +36,7 @@ public:
 	void encode(writer& bw) const override;
 	std::string to_json() const override;
 
-	/** Get the value as an int64_t.
-	 * @return the value
-	 */
-	int64_t as_int64() const {
+	operator int64_t() const override {
 		return _value;
 	}
 };

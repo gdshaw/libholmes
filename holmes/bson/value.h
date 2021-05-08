@@ -71,6 +71,31 @@ public:
 	 */
 	virtual const value& operator*() const;
 
+	/** Get the content of this BSON value if it is a boolean.
+	 * @return the content
+	 * @throws std::bad_cast if this is not a boolean
+	 */
+	virtual operator bool() const;
+
+	/** Get the content of this BSON value if it is an integer.
+	 * Allowed types are int32 and int64.
+	 * @return the content
+	 * @throws std::bad_cast if this is not an integer type
+	 */
+	virtual operator int64_t() const;
+
+	/** Get the content of this BSON value if it is a character string.
+	 * @return the content
+	 * @throws std::bad_cast if this is not a character string
+	 */
+	virtual operator std::string() const;
+
+	/** Get the content of this BSON value if it is a binary string.
+	 * @return the content
+	 * @throws std::bad_cast if this is not a binary string
+	 */
+	virtual operator octet::string() const;
+
 	/** Dynamically cast this object to a sepcific type of bson::value.
 	 * If this value is a reference to another value (as in the case of a
 	 * bson::any) then return a cast reference to that underlying value,

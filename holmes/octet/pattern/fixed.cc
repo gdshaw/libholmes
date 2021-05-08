@@ -11,7 +11,7 @@ namespace holmes::octet::pattern {
 
 fixed::fixed(const bson::document& bson_pattern) {
 	try {
-		_content = bson_pattern.at("content").as<bson::binary>();
+		_content = bson_pattern.at("content");
 	} catch (std::out_of_range&) {
 		throw parse_error("missing content field in fixed pattern");
 	} catch (std::bad_cast&) {
