@@ -6,6 +6,7 @@
 #include "holmes/parse_error.h"
 #include "holmes/octet/pattern/any.h"
 #include "holmes/octet/pattern/fixed.h"
+#include "holmes/octet/pattern/timeval.h"
 #include "holmes/octet/pattern/wildcard.h"
 #include "holmes/octet/pattern/sequence.h"
 #include "holmes/bson/string.h"
@@ -20,6 +21,8 @@ any::any(const bson::value& bson_pattern) {
 		std::string type(document.at("type"));
 		if (type == "fixed") {
 			_pattern = std::make_unique<pattern::fixed>(document);
+		} else if (type == "timeval") {
+			_pattern = std::make_unique<pattern::timeval>(document);
 		} else if (type == "wildcard") {
 			_pattern = std::make_unique<pattern::wildcard>(document);
 		} else {
