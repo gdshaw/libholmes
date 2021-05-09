@@ -20,8 +20,8 @@ BIN = $(SRC:src/%.cc=bin/%)
 MAINBIN = bin/$(pkgname)
 AUXBIN = $(filter-out $(MAINBIN),$(BIN))
 
-HOLMES = $(wildcard holmes/*.cc) $(wildcard holmes/*/*.cc) $(wildcard holmes/*/*/*.cc)
-TESTS = $(wildcard test/*.test) $(wildcard test/*/*.test) $(wildcard test/*/*/*.test)
+HOLMES = $(wildcard holmes/*.cc) $(wildcard holmes/*/*.cc) $(wildcard holmes/*/*/*.cc) $(wildcard holmes/*/*/*/*.cc)
+TESTS = $(wildcard test/*.test) $(wildcard test/*/*.test) $(wildcard test/*/*/*.test) $(wildcard test/*/*/*/*.test)
 
 .PHONY: all
 all: $(BIN)

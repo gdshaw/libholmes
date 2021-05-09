@@ -5,11 +5,11 @@
 
 #include "holmes/bson/int32.h"
 #include "holmes/bson/binary.h"
-#include "holmes/net/icmp/echo_message.h"
+#include "holmes/net/icmp/echo/message.h"
 
-namespace holmes::net::icmp {
+namespace holmes::net::icmp::echo {
 
-bson::document echo_message::to_bson() const {
+bson::document message::to_bson() const {
 	bson::document bson_message(message::to_bson());
 	bson_message.append("id", bson::int32(id()));
 	bson_message.append("seqnum", bson::int32(seqnum()));
@@ -17,4 +17,4 @@ bson::document echo_message::to_bson() const {
 	return bson_message;
 }
 
-} /* namespace holmes::net::icmp */
+} /* namespace holmes::net::icmp::echo */

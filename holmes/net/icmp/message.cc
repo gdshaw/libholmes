@@ -7,7 +7,7 @@
 #include "holmes/bson/binary.h"
 #include "holmes/net/inet/checksum.h"
 #include "holmes/net/icmp/message.h"
-#include "holmes/net/icmp/echo_message.h"
+#include "holmes/net/icmp/echo/message.h"
 
 namespace holmes::net::icmp {
 
@@ -35,7 +35,7 @@ std::unique_ptr<message> message::parse_icmp4(const octet::string& data) {
 	switch (get_uint8(data, 0)) {
 	case 0:
 	case 8:
-		return std::make_unique<echo_message>(data);
+		return std::make_unique<echo::message>(data);
 	default:
 		return std::make_unique<message>(data);
 	}

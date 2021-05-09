@@ -13,21 +13,21 @@
 #include "holmes/octet/string.h"
 #include "holmes/net/icmp/message.h"
 
-namespace holmes::net::icmp {
+namespace holmes::net::icmp::echo {
 
 /** A class to represent an ICMP echo request or reply message.
  * This class is applicable to:
  * - ICMPv4 message types 0 and 8
  * - IVMPv6 message types 128 and 129
  */
-class echo_message:
-	public message {
+class message:
+	public icmp::message {
 public:
 	/** Construct ICMP echo message.
 	 * @param data the raw content
 	 */
-	explicit echo_message(const octet::string& data):
-		message(data) {}
+	explicit message(const octet::string& data):
+		icmp::message(data) {}
 
 	/** Get the identification field.
 	 * @return the identification field
@@ -53,6 +53,6 @@ public:
 	bson::document to_bson() const override;
 };
 
-} /* namespace holmes::net::icmp */
+} /* namespace holmes::net::icmp::echo */
 
 #endif
