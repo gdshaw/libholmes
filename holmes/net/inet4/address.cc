@@ -1,5 +1,5 @@
 // This file is part of libholmes.
-// Copyright 2021 Graham Shaw.
+// Copyright 2021-23 Graham Shaw.
 // Distribution and modification are permitted within the terms of the
 // GNU General Public License (version 3 or any later version).
 
@@ -14,6 +14,10 @@ address::address(const octet::string& data):
 	if (data.length() != 4) {
 		throw parse_error("IPv4 address must be 4 octets long");
 	}
+}
+
+address* address::_clone() const {
+	return new address(*this);
 }
 
 void address::write(std::ostream& out) const {
