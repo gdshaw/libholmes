@@ -8,19 +8,11 @@
 
 namespace holmes::net::inet4 {
 
-address::address(const octet::string& data):
-	inet::address(data) {
-
-	if (data.length() != 4) {
-		throw parse_error("IPv4 address must be 4 octets long");
-	}
-}
-
 address* address::_clone() const {
 	return new address(*this);
 }
 
-void address::write(std::ostream& out) const {
+void address::_write(std::ostream& out) const {
 	auto data = this->data();
 	unsigned int width = out.width();
 	out << (data[0] & 0xff) << '.';
@@ -30,6 +22,14 @@ void address::write(std::ostream& out) const {
 	out << (data[2] & 0xff) << '.';
 	out.width(width);
 	out << (data[3] & 0xff);
+}
+
+address::address(const octet::string& data):
+	inet::address(data) {
+
+	if (data.length() != 4) {
+		throw parse_error("IPv4 address must be 4 octets long");
+	}
 }
 
 } /* namespace holmes::net::inet4 */

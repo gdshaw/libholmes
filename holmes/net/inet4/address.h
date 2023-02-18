@@ -6,8 +6,6 @@
 #ifndef HOLMES_NET_INET4_ADDRESS
 #define HOLMES_NET_INET4_ADDRESS
 
-#include <iostream>
-
 #include "holmes/net/inet/address.h"
 
 namespace holmes::net::inet4 {
@@ -16,14 +14,13 @@ namespace holmes::net::inet4 {
 class address:
 	public inet::address {
 protected:
-        address* _clone() const override;
+	address* _clone() const override;
+	void _write(std::ostream& out) const override;
 public:
 	/** Construct IPv4 address from raw content.
 	 * @param data the required raw content
 	 */
 	explicit address(const octet::string& data);
-
-	void write(std::ostream& out) const override;
 
 	/** Clone this address.
 	 * @return the cloned address

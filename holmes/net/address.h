@@ -16,11 +16,27 @@ namespace holmes::net {
 
 /** A base class to represent a generic address. */
 class address {
+	friend std::ostream& operator<<(std::ostream& out, const address& addr);
 private:
 	/** The raw content of this address. */
 	octet::string _data;
 protected:
+	/** Clone this address (unmanaged pointer).
+	 * @return the cloned address
+	 */
 	virtual address* _clone() const = 0;
+
+	/** Write this address to a stream.
+	 * The stream state is respected:
+	 * - If a field width has been specified, then it applies individually
+	 *   to each component of the address (but does not remain in effect
+	 *   following the final component).
+	 * - The case of hexademical digits follows the stream state.
+	 *
+	 * The output format is otherwise as close as it can be to canonical form.
+	 * @param out the output stream
+	 */
+	virtual void _write(std::ostream& out) const = 0;
 public:
 	/** Construct address from raw content.
 	 * @param data the required raw content
@@ -42,18 +58,6 @@ public:
 	 */
 	virtual operator std::string() const;
 
-	/** Write this address to a stream.
-	 * The stream state is respected:
-	 * - If a field width has been specified, then it applies individually
-	 *   to each component of the address (but does not remain in effect
-	 *   following the final component).
-	 * - The case of hexademical digits follows the stream state.
-	 *
-	 * The output format is otherwise as close as it can be to canonical form.
-	 * @param out the output stream
-	 */
-	virtual void write(std::ostream& out) const = 0;
-
 	/** Clone this address.
 	 * @return the cloned address
 	 */
@@ -69,7 +73,7 @@ public:
  * @return the output stream
  */
 inline std::ostream& operator<<(std::ostream& out, const address& addr) {
-	addr.write(out);
+	addr._write(out);
 	return out;
 }
 

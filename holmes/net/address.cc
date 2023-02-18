@@ -11,7 +11,7 @@ namespace holmes::net {
 
 address::operator std::string() const {
 	std::ostringstream out;
-	write(out);
+	_write(out);
 	return out.str();
 }
 
