@@ -30,7 +30,7 @@ bson::document datagram::to_bson() const {
 	bson_datagram.append("traffic_class", bson::int32(traffic_class()));
 	bson_datagram.append("flow_label", bson::int32(flow_label()));
 	bson_datagram.append("payload_length", bson::int64(payload_length()));
-	bson_datagram.append("next_header", bson::int32(next_header()));
+	bson_datagram.append("next_header", bson::int32(protocol()));
 	bson_datagram.append("hop_limit", bson::int32(hop_limit()));
 	bson_datagram.append("src_addr", bson::string(src_addr()));
 	bson_datagram.append("dst_addr", bson::string(dst_addr()));

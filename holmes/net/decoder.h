@@ -10,9 +10,12 @@
 
 #include "holmes/artefact.h"
 #include "holmes/net/ethernet/frame.h"
+#include "holmes/net/inet/datagram.h"
+#include "holmes/net/inet/wrapper.h"
 #include "holmes/net/inet4/datagram.h"
 #include "holmes/net/inet6/datagram.h"
 #include "holmes/net/icmp/message.h"
+#include "holmes/net/udp/datagram.h"
 
 namespace holmes::net {
 
@@ -55,11 +58,17 @@ protected:
 	 */
 	virtual void handle_inet6(const inet6::datagram& inet6_dgram);
 
-	/** Handle a decoded ICMPv4 datagram.
+	/** Handle a decoded ICMPv4 message.
 	 * If not overridden then this handler forwards to decoder::handle_artefact.
 	 * @param icmp4_msg the message to be handled
 	 */
 	virtual void handle_icmp4(const icmp::message& icmp4_msg);
+
+	/** Handle a decoded UDP datagram.
+	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param udp_dgram the datagram to be handled
+	 */
+	virtual void handle_udp(const udp::datagram& udp_dgram);
 
 	/** Handle any type of decoded artefact.
 	 * If not overridden then this handler does nothing.
@@ -83,10 +92,23 @@ public:
 	 */
 	void decode_inet6(octet::string data);
 
+	/** Decode an IP transport-layer protocol.
+	 * @param inet_dgram the containing IP datagram
+	 * @param wrapper the wrapper for the transport protocol
+	 */
+	void decode_wrapper(const inet::datagram& inet_dgram,
+		const inet::wrapper& wrapper);
+
 	/** Decode an ICMPv4 datagram.
 	 * @param raw the raw data to be decoded
 	 */
 	void decode_icmp4(octet::string data);
+
+	/** Decode a UDP datagram.
+	 * @param raw the raw data to be decoded
+	 */
+	void decode_udp(const inet::datagram& inet_dgram,
+		octet::string data);
 };
 
 } /* namespace holmes::net */

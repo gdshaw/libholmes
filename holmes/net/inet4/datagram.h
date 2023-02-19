@@ -118,7 +118,7 @@ public:
 	/** Get the next layer protocol.
 	 * @return the protocol number
 	 */
-	uint8_t protocol() const {
+	uint8_t protocol() const override {
 		return get_uint8(_data, 9);
 	}
 
@@ -163,7 +163,7 @@ public:
 	/** Get the payload.
 	 * @return the payload
 	 */
-	octet::string payload() const {
+	octet::string payload() const override {
 		return _data.substr(ihl() * 4);
 	}
 

@@ -1,0 +1,19 @@
+{
+  "data": "UlQAtRl0UlQA3o0nCABFAABEPeVAAEARe3DAqAACwKgAAZ7vADUAMIGVhi0BIAABAAAAAAABB2V4YW1wbGUDY29tAAABAAEAACkEsAAAAAAAAA==",
+  "expected": {
+    "udp" : {
+      "src_port" : 40687,
+      "dst_port" : 53,
+      "checksum" : {
+        "calculated" : 33920,
+        "recorded" : 33173
+      },
+      "payload" : {
+        "$binary" : {
+          "base64" : "hi0BIAABAAAAAAABB2V4YW1wbGUDY29tAAABAAEAACkEsAAAAAAAAA==",
+          "subtype" : 0
+        }
+      }
+    }
+  }
+}

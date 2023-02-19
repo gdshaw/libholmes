@@ -60,10 +60,7 @@ public:
 		return get_uint16(_data, 4);
 	}
 
-	/** Get the next header protocol.
-	 * @return the protocol number
-	 */
-	uint8_t next_header() const {
+	uint8_t protocol() const override {
 		return get_uint8(_data, 6);
 	}
 
@@ -88,10 +85,7 @@ public:
 		return *_dst_addr;
 	}
 
-	/** Get the payload.
-	 * @return the payload
-	 */
-	octet::string payload() const {
+	octet::string payload() const override {
 		return _data.substr(40);
 	}
 

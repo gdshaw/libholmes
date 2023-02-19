@@ -8,6 +8,7 @@
 
 #include "holmes/artefact.h"
 #include "holmes/net/inet/checksum.h"
+#include "holmes/net/inet/wrapper.h"
 
 namespace holmes::net::inet {
 
@@ -15,7 +16,8 @@ class address;
 
 /** An abstract base class to represent an IP datagram. */
 class datagram:
-	public artefact {
+	public artefact,
+	public wrapper {
 public:
 	/** Get the raw content of this datagram.
 	 * @return the raw content
@@ -51,6 +53,6 @@ public:
 		uint8_t protocol, size_t length) const = 0;
 };
 
-} /* namespace holmes::net::inet4 */
+} /* namespace holmes::net::inet */
 
 #endif
