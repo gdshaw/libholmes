@@ -15,6 +15,10 @@ void decoder::handle_inet4(const inet4::datagram& inet4_dgram) {
 	handle_artefact("inet4", inet4_dgram);
 }
 
+void decoder::handle_inet6(const inet6::datagram& inet6_dgram) {
+	handle_artefact("inet6", inet6_dgram);
+}
+
 void decoder::handle_icmp4(const icmp::message& icmp4_msg) {
 	handle_artefact("icmp4", icmp4_msg);
 }
@@ -25,8 +29,13 @@ void decoder::handle_artefact(const std::string& protocol,
 void decoder::decode_ethernet(octet::string data) {
 	ethernet::frame ether_frame(data);
 	handle_ethernet(ether_frame);
-	if (ether_frame.ethertype() == 0x0800) {
+	switch (ether_frame.ethertype()) {
+	case 0x0800:
 		decode_inet4(ether_frame.payload());
+		break;
+	case 0x86dd:
+		decode_inet6(ether_frame.payload());
+		break;
 	}
 }
 
@@ -36,6 +45,11 @@ void decoder::decode_inet4(octet::string data) {
 	if (inet4_dgram.protocol() == 1) {
 		decode_icmp4(inet4_dgram.payload());
 	}
+}
+
+void decoder::decode_inet6(octet::string data) {
+	inet6::datagram inet6_dgram(data);
+	handle_inet6(inet6_dgram);
 }
 
 void decoder::decode_icmp4(octet::string data) {

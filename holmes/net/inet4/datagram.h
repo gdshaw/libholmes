@@ -168,7 +168,8 @@ public:
 	}
 
 	bson::document to_bson() const override;
-	inet::checksum make_pseudo_header_checksum() const override;
+	inet::checksum make_pseudo_header_checksum(
+		uint8_t protocol, size_t length) const override;
 };
 
 } /* namespace holmes::net::inet4 */

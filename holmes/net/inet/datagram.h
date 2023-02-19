@@ -43,9 +43,12 @@ public:
 	virtual const address& dst_addr() const = 0;
 
 	/** Make checksum for pseudo-header.
+	 * @param protocol the transport protocol number
+	 * @param length the upper layer packet length
 	 * @return the checksum object
 	 */
-	virtual inet::checksum make_pseudo_header_checksum() const = 0;
+	virtual inet::checksum make_pseudo_header_checksum(
+		uint8_t protocol, size_t length) const = 0;
 };
 
 } /* namespace holmes::net::inet4 */

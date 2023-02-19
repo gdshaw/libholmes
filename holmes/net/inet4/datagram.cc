@@ -76,11 +76,13 @@ bson::document datagram::to_bson() const {
 	return bson_datagram;
 }
 
-inet::checksum datagram::make_pseudo_header_checksum() const {
+inet::checksum datagram::make_pseudo_header_checksum(
+	uint8_t protocol, size_t length) const {
+
 	inet::checksum checksum;
 	checksum(_data.substr(12, 8));
-	checksum(protocol());
-	checksum(payload().length());
+	checksum(protocol);
+	checksum(length);
 	return checksum;
 }
 
