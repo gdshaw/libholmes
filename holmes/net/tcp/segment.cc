@@ -7,6 +7,7 @@
 #include "holmes/bson/int32.h"
 #include "holmes/bson/int64.h"
 #include "holmes/bson/binary.h"
+#include "holmes/bson/array.h"
 #include "holmes/net/inet/checksum.h"
 #include "holmes/net/tcp/segment.h"
 
@@ -18,10 +19,31 @@ segment::segment(const inet::datagram& inet_datagram, octet::string& data):
         _phc(inet_datagram.make_pseudo_header_checksum(protocol, data.length())),
 	_data(data) {}
 
+std::unique_ptr<segment::option_list> segment::_make_options() const {
+	octet::string header = _data.substr(0, data_offset() * 4);
+	octet::string option_data = header.substr(20);
+
+	std::unique_ptr<option_list> options = std::make_unique<option_list>();
+	while (!option_data.empty()) {
+		std::unique_ptr<option> opt = option::parse(option_data);
+		bool eool = (opt->type() == 0);
+		options->push_back(std::move(opt));
+		if (eool) {
+			break;
+		}
+	}
+	return options;
+}
+
 bson::document segment::to_bson() const {
 	bson::document bson_checksum;
 	bson_checksum.append("recorded", bson::int32(recorded_checksum()));
 	bson_checksum.append("calculated", bson::int32(calculated_checksum()));
+
+	bson::array bson_options;
+	for (const auto& option : options()) {
+		bson_options.append(option->to_bson());
+	}
 
 	bson::document bson_dgram;
 	bson_dgram.append("src_port", bson::int32(src_port()));
@@ -41,6 +63,7 @@ bson::document segment::to_bson() const {
 	bson_dgram.append("window_size", bson::int32(window_size()));
 	bson_dgram.append("checksum", bson_checksum);
 	bson_dgram.append("urgent_pointer", bson::int32(urgent_pointer()));
+	bson_dgram.append("options", bson_options);
 	bson_dgram.append("payload", bson::binary(payload()));
 	return bson_dgram;
 }

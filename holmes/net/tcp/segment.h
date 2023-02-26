@@ -6,9 +6,13 @@
 #ifndef HOLMES_NET_TCP_SEGMENT
 #define HOLMES_NET_TCP_SEGMENT
 
+#include <memory>
+#include <vector>
+
 #include "holmes/artefact.h"
 #include "holmes/octet/string.h"
 #include "holmes/net/inet/datagram.h"
+#include "holmes/net/tcp/option.h"
 
 namespace holmes::net::tcp {
 
@@ -19,11 +23,22 @@ public:
         /** The internet protocol number. */
         static const uint8_t protocol = 6;
 private:
+	/** A type to represent a list of options. */
+	typedef std::vector<std::unique_ptr<option>> option_list;
+
 	/** The pseudo-header checksum. */
 	inet::checksum _phc;
 
 	/** The raw content. */
 	octet::string _data;
+
+	/** The list of options. */
+	mutable std::unique_ptr<option_list> _options;
+
+	/** Make the list of options.
+	 * @return the newly-created list of options
+	 */
+	std::unique_ptr<option_list> _make_options() const;
 public:
 	/** Construct TCP segment.
 	 * @param inet_datagram the IP datagram to which this belongs.
@@ -45,6 +60,7 @@ public:
 		if (this != &that) {
 			this->_phc = that._phc;
 			this->_data = that._data;
+			this->_options.reset();
 		}
 		return *this;
 	}
@@ -187,6 +203,16 @@ public:
 	 */
 	uint16_t urgent_pointer() const {
 		return get_uint16(_data, 18);
+	}
+
+	/** Get the list of options.
+	 * @return the list of options
+	 */
+	const option_list& options() const {
+		if (!_options) {
+			_options = _make_options();
+		}
+		return *_options;
 	}
 
 	/** Get the payload.
