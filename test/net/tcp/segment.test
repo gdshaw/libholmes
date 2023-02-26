@@ -1,0 +1,33 @@
+{
+  "data": "UlQANhBtUlQAk770CABFAAA8LTJAAEAGjDbAqAACwKgAAYvcAFD6Rg2AAAAAAKAC+vBWNgAAAgQFtAQCCAo9L6RiAAAAAAEDAwc=",
+  "expected": {
+    "tcp" : {
+      "src_port" : 35804,
+      "dst_port" : 80,
+      "seq" : 4198894976,
+      "ack" : 0,
+      "flags" : 1,
+      "ns_flag" : false,
+      "cwr_flag" : false,
+      "ece_flag" : false,
+      "urg_flag" : false,
+      "ack_flag" : false,
+      "psh_flag" : false,
+      "rst_flag" : false,
+      "syn_flag" : true,
+      "fin_flag" : false,
+      "window_size" : 64240,
+      "urgent_pointer" : 0,
+      "checksum" : {
+        "calculated" : 22070,
+         "recorded" : 22070
+      },
+      "payload" : {
+        "$binary" : {
+          "base64" : "",
+          "subtype" : 0
+        }
+      }
+    }
+  }
+}
