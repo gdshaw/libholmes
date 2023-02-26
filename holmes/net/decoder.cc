@@ -27,6 +27,10 @@ void decoder::handle_udp(const udp::datagram& udp_dgram) {
 	handle_artefact("udp", udp_dgram);
 }
 
+void decoder::handle_tcp(const tcp::segment& tcp_seg) {
+	handle_artefact("tcp", tcp_seg);
+}
+
 void decoder::handle_artefact(const std::string& protocol,
 	const artefact& af) {}
 
@@ -51,6 +55,9 @@ void decoder::decode_wrapper(
 		if (inet_dgram.version() == 4) {
 			decode_icmp4(wrapper.payload());
 		}
+		break;
+	case 6:
+		decode_tcp(inet_dgram, wrapper.payload());
 		break;
 	case 17:
 		decode_udp(inet_dgram, wrapper.payload());
@@ -80,6 +87,13 @@ void decoder::decode_udp(const inet::datagram& inet_dgram,
 
 	udp::datagram udp_dgram(inet_dgram, data);
 	handle_udp(udp_dgram);
+}
+
+void decoder::decode_tcp(const inet::datagram& inet_dgram,
+	octet::string data) {
+
+	tcp::segment tcp_seg(inet_dgram, data);
+	handle_tcp(tcp_seg);
 }
 
 } /* namespace holmes::net */

@@ -16,6 +16,7 @@
 #include "holmes/net/inet6/datagram.h"
 #include "holmes/net/icmp/message.h"
 #include "holmes/net/udp/datagram.h"
+#include "holmes/net/tcp/segment.h"
 
 namespace holmes::net {
 
@@ -70,6 +71,12 @@ protected:
 	 */
 	virtual void handle_udp(const udp::datagram& udp_dgram);
 
+	/** Handle a decoded TCP segment.
+	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param tcp_seg the segment to be handled
+	 */
+	virtual void handle_tcp(const tcp::segment& tcp_seg);
+
 	/** Handle any type of decoded artefact.
 	 * If not overridden then this handler does nothing.
 	 * @param proto the name of the network protocol
@@ -108,6 +115,12 @@ public:
 	 * @param raw the raw data to be decoded
 	 */
 	void decode_udp(const inet::datagram& inet_dgram,
+		octet::string data);
+
+	/** Decode a TCP segment.
+	 * @param raw the raw data to be decoded
+	 */
+	void decode_tcp(const inet::datagram& inet_dgram,
 		octet::string data);
 };
 
