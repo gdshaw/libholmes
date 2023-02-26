@@ -10,7 +10,7 @@
 namespace holmes::net::icmp::echo {
 
 bson::document message::to_bson() const {
-	bson::document bson_message(message::to_bson());
+	bson::document bson_message(icmp::message::to_bson());
 	bson_message.append("id", bson::int32(id()));
 	bson_message.append("seqnum", bson::int32(seqnum()));
 	bson_message.append("payload", bson::binary(payload()));
