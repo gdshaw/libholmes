@@ -12,7 +12,7 @@ libexecdir = $(libdir)
 pkgname = holmes
 
 CPPFLAGS = -MD -MP -I. '-DLIBEXECDIR="$(libexecdir)"' '-DPKGNAME="$(pkgname)"'
-CXXFLAGS = -fPIC -O2 --std=c++17 -Wall -Wpedantic
+CXXFLAGS = -fPIC -O2 --std=c++20 -Wall -Wpedantic
 LDLIBS = -ldl
 
 SRC = $(wildcard src/*.cc)

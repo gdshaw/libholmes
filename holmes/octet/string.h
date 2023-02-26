@@ -345,24 +345,8 @@ inline bool operator==(const octet::string& lhs, const octet::string& rhs) {
 	return lhs.compare(rhs) == 0;
 }
 
-inline bool operator!=(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs) != 0;
-}
-
-inline bool operator<(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs) < 0;
-}
-
-inline bool operator>=(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs) >= 0;
-}
-
-inline bool operator<=(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs) <= 0;
-}
-
-inline bool operator>(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs) > 0;
+inline auto operator<=>(const octet::string& lhs, const octet::string& rhs) {
+	return lhs.compare(rhs);
 }
 
 /** Write an octet string as hex to an output stream.
