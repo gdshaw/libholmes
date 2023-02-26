@@ -24,7 +24,8 @@
       },
       "options": [
         {
-          "type": 2
+          "type": 2,
+          "mss": 1460
         },
         {
           "type": 4

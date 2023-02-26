@@ -8,6 +8,7 @@
 #include "holmes/net/tcp/option.h"
 #include "holmes/net/tcp/end_of_option_list.h"
 #include "holmes/net/tcp/no_operation_option.h"
+#include "holmes/net/tcp/maximum_segment_size_option.h"
 
 namespace holmes::net::tcp {
 
@@ -46,6 +47,8 @@ std::unique_ptr<option> option::parse(octet::string& data) {
 		return std::make_unique<end_of_option_list>(data);
 	case 1:
 		return std::make_unique<no_operation_option>(data);
+	case 2:
+		return std::make_unique<maximum_segment_size_option>(data);
 	default:
 		return std::make_unique<option>(data);
 	}
