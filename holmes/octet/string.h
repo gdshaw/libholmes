@@ -346,7 +346,7 @@ inline bool operator==(const octet::string& lhs, const octet::string& rhs) {
 }
 
 inline auto operator<=>(const octet::string& lhs, const octet::string& rhs) {
-	return lhs.compare(rhs);
+	return lhs.compare(rhs) <=> 0;
 }
 
 /** Write an octet string as hex to an output stream.
