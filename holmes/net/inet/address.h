@@ -30,6 +30,14 @@ public:
 	}
 };
 
+inline bool operator==(const address& lhs, const address& rhs) {
+	return lhs.data() == rhs.data();
+}
+
+inline auto operator<=>(const address& lhs, const address& rhs) {
+	return lhs.data() <=> rhs.data();
+}
+
 } /* namespace holmes::net::inet */
 
 #endif
