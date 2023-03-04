@@ -7,14 +7,14 @@
 #define HOLMES_NET_UDP_DATAGRAM
 
 #include "holmes/octet/string.h"
-#include "holmes/artefact.h"
 #include "holmes/net/inet/datagram.h"
+#include "holmes/net/inet/l4_packet.h"
 
 namespace holmes::net::udp {
 
 /** A class to represent a UDP datagram. */
 class datagram:
-	public artefact {
+	public inet::l4_packet {
 public:
 	/** The internet protocol number. */
 	static const uint8_t protocol = 17;
@@ -36,14 +36,14 @@ public:
 	/** Get the source port.
 	 * @return the source port
 	 */
-	uint16_t src_port() const {
+	uint16_t src_port() const override {
 		return get_uint16(_data, 0);
 	}
 
 	/** Get the destination port.
 	 * @return the destination port
 	 */
-	uint16_t dst_port() const {
+	uint16_t dst_port() const override {
 		return get_uint16(_data, 2);
 	}
 
