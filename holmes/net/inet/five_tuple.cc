@@ -12,6 +12,14 @@
 
 namespace holmes::net::inet {
 
+five_tuple::five_tuple(uint8_t protocol, inet::address& dst_addr,
+	uint16_t dst_port, inet::address& src_addr, uint16_t src_port):
+	_protocol(protocol),
+	_dst_addr(dst_addr.clone()),
+	_dst_port(dst_port),
+	_src_addr(src_addr.clone()),
+	_src_port(src_port) {}
+
 five_tuple::five_tuple(const inet::datagram& inet_dgram,
 	const inet::l4_packet& l4_pkt):
 	_protocol(inet_dgram.protocol()),
@@ -57,7 +65,7 @@ bool operator==(const five_tuple& lhs, const five_tuple& rhs) {
 	return true;
 }
 
-auto operator<=>(const five_tuple& lhs, const five_tuple& rhs) {
+std::strong_ordering operator<=>(const five_tuple& lhs, const five_tuple& rhs) {
 	if (lhs.protocol() != rhs.protocol()) {
 		return lhs.protocol() <=> rhs.protocol();
 	}
