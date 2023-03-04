@@ -8,7 +8,10 @@
 
 namespace holmes::net::inet {
 
-/** A mixin class to represent a wrapper for an IP transport protocol. */
+/** A mixin class to represent a wrapper for an IP transport protocol.
+ * For IPv4, the wrapper will always be the IPv4 datagram.
+ * For IPv6, it could be either the IPv6 datagram or an extension header.
+ */
 class wrapper {
 public:
 	/** Get the transport layer protocol number for the payload.
