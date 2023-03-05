@@ -30,7 +30,7 @@ five_tuple::five_tuple(const inet::datagram& inet_dgram,
 
 five_tuple::operator std::string() const {
 	std::stringstream out;
-	out << protocol() << ";"
+	out << int(protocol()) << ";"
 		<< src_addr() << ":" << src_port() << "=>"
 		<< dst_addr() << ":" << dst_port();
 	return out.str();
