@@ -95,6 +95,24 @@ public:
 		return get_uint32(_data, 8);
 	}
 
+	/** Get the extended sequence number.
+	 * @param ref the sequence number to use as a reference
+	 * @return the extended sequence number
+	 */
+	uint64_t seq(uint64_t ref) const {
+		uint32_t diff = seq() - ref + 0x80000000;
+		return ref + diff - 0x80000000;
+	}
+
+	/** Get the extended acknowledgement number.
+	 * @param ref the sequence number to use as a reference
+	 * @return the extended acknowledgement number
+	 */
+	uint64_t ack(uint64_t ref) const {
+		uint32_t diff = ack() - ref + 0x80000000;
+		return ref + diff - 0x80000000;
+	}
+
 	/** Get the data offset.
 	 * @return the data offset, in 32-bit words
 	 */
