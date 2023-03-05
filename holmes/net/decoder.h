@@ -61,21 +61,27 @@ protected:
 
 	/** Handle a decoded ICMPv4 message.
 	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param inet_dgram the IP datagram to which the message belongs
 	 * @param icmp4_msg the message to be handled
 	 */
-	virtual void handle_icmp4(const icmp::message& icmp4_msg);
+	virtual void handle_icmp4(const inet::datagram& inet_dgram,
+		const icmp::message& icmp4_msg);
 
 	/** Handle a decoded UDP datagram.
 	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param inet_dgram the IP datagram to which the UDP datagram belongs
 	 * @param udp_dgram the datagram to be handled
 	 */
-	virtual void handle_udp(const udp::datagram& udp_dgram);
+	virtual void handle_udp(const inet::datagram& inet_dgram,
+		const udp::datagram& udp_dgram);
 
 	/** Handle a decoded TCP segment.
 	 * If not overridden then this handler forwards to decoder::handle_artefact.
+	 * @param inet_dgram the IP datagram to which the TCP segment belongs
 	 * @param tcp_seg the segment to be handled
 	 */
-	virtual void handle_tcp(const tcp::segment& tcp_seg);
+	virtual void handle_tcp(const inet::datagram& inet_dgram,
+		const tcp::segment& tcp_seg);
 
 	/** Handle any type of decoded artefact.
 	 * If not overridden then this handler does nothing.
@@ -107,9 +113,11 @@ public:
 		const inet::wrapper& wrapper);
 
 	/** Decode an ICMPv4 datagram.
+	 * @param inet_dgram the containing IP datagram
 	 * @param raw the raw data to be decoded
 	 */
-	void decode_icmp4(octet::string data);
+	void decode_icmp4(const inet::datagram& inet_dgram,
+		octet::string data);
 
 	/** Decode a UDP datagram.
 	 * @param raw the raw data to be decoded

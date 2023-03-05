@@ -19,15 +19,21 @@ void decoder::handle_inet6(const inet6::datagram& inet6_dgram) {
 	handle_artefact("inet6", inet6_dgram);
 }
 
-void decoder::handle_icmp4(const icmp::message& icmp4_msg) {
+void decoder::handle_icmp4(const inet::datagram& inet_dgram,
+	const icmp::message& icmp4_msg) {
+
 	handle_artefact("icmp4", icmp4_msg);
 }
 
-void decoder::handle_udp(const udp::datagram& udp_dgram) {
+void decoder::handle_udp(const inet::datagram& inet_dgram,
+	const udp::datagram& udp_dgram) {
+
 	handle_artefact("udp", udp_dgram);
 }
 
-void decoder::handle_tcp(const tcp::segment& tcp_seg) {
+void decoder::handle_tcp(const inet::datagram& inet_dgram,
+	const tcp::segment& tcp_seg) {
+
 	handle_artefact("tcp", tcp_seg);
 }
 
@@ -53,7 +59,7 @@ void decoder::decode_wrapper(
 	switch (wrapper.protocol()) {
 	case 1:
 		if (inet_dgram.version() == 4) {
-			decode_icmp4(wrapper.payload());
+			decode_icmp4(inet_dgram, wrapper.payload());
 		}
 		break;
 	case 6:
@@ -77,23 +83,25 @@ void decoder::decode_inet6(octet::string data) {
 	decode_wrapper(inet6_dgram, inet6_dgram);
 }
 
-void decoder::decode_icmp4(octet::string data) {
+void decoder::decode_icmp4(const inet::datagram& inet_dgram,
+	octet::string data) {
+
 	auto icmp4_msg = icmp::message::parse_icmp4(data);
-	handle_icmp4(*icmp4_msg);
+	handle_icmp4(inet_dgram, *icmp4_msg);
 }
 
 void decoder::decode_udp(const inet::datagram& inet_dgram,
 	octet::string data) {
 
 	udp::datagram udp_dgram(inet_dgram, data);
-	handle_udp(udp_dgram);
+	handle_udp(inet_dgram, udp_dgram);
 }
 
 void decoder::decode_tcp(const inet::datagram& inet_dgram,
 	octet::string data) {
 
 	tcp::segment tcp_seg(inet_dgram, data);
-	handle_tcp(tcp_seg);
+	handle_tcp(inet_dgram, tcp_seg);
 }
 
 } /* namespace holmes::net */
