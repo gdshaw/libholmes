@@ -113,6 +113,18 @@ public:
 		return ref + diff - 0x80000000;
 	}
 
+	/** Get the following extended sequence number.
+	 * This is the first extended sequence number which lies beyond the end
+	 * of this segment.
+	 * @param ref the sequence number to use as a reference
+	 * @return the following extended sequence number
+	 */
+	uint64_t nextseq(uint64_t ref) const {
+		return seq(ref) + payload().length() +
+			(syn_flag() ? 1 : 0) +
+			(fin_flag() ? 1 : 0);
+	}
+
 	/** Get the data offset.
 	 * @return the data offset, in 32-bit words
 	 */
