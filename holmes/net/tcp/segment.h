@@ -251,6 +251,15 @@ public:
 	octet::string payload() const {
 		return _data.substr(data_offset() * 4);
 	}
+
+	/** Test whether this segment contains a given extended sequence number.
+	 * @param ref the extended sequence number to test
+	 * @return true if contained within this segment, otherwise false
+	 */
+	bool contains(uint64_t ref) const {
+		uint64_t extseq = seq(ref);
+		return (ref >= extseq) && (ref < extseq + payload().length());
+	}
 };
 
 } /* namespace holmes::net::tcp */
