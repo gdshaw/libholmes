@@ -23,6 +23,10 @@ using namespace holmes::net;
 
 void write_help(std::ostream& out) {
 	out << "Usage: holmes-flow <pathname>" << std::endl;
+	out << std::endl;
+	out << "Options:" << std::endl;
+	out << std::endl;
+	out << "  -j  join output into single JSON array" << std::endl;
 }
 
 class flow_table_decoder final:
@@ -60,10 +64,13 @@ void flow_table_decoder::decode(const std::string& pathname) {
 }
 
 int main(int argc, char* argv[]) {
+	bool join = false;
+
 	int opt;
 	while ((opt = getopt(argc, argv, "j")) != -1) {
 		switch (opt) {
 		case 'j':
+			join = true;
 			break;
 		}
 	}
@@ -80,10 +87,30 @@ int main(int argc, char* argv[]) {
 			decoder.decode(pathname);
 		}
 		auto summary = decoder.flows().summarise();
-		for (const auto& i : summary) {
-			std::cout << i << std::endl;
+
+		if (join) {
+			std::cout << '[';
 		}
 
+		bool first = true;
+		for (const auto& i : summary) {
+			if (first) {
+				first = false;
+			} else {
+				if (join) {
+					std::cout << ',';
+				}
+				std::cout << std::endl;
+			}
+			std::cout << i.to_bson().to_json();
+		}
+
+		if (join) {
+			std::cout << ']';
+		}
+		if (!first) {
+			std::cout << "\n";
+		}
 	} catch (std::exception& ex) {
 		std::cerr << ex.what() << std::endl;
 		exit(1);
