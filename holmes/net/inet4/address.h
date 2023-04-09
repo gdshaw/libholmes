@@ -28,6 +28,8 @@ public:
 	std::unique_ptr<address> clone() const {
 		return std::unique_ptr<address>(_clone());
 	}
+
+	bson::document to_bson() const override;
 };
 
 } /* namespace holmes::net::inet4 */

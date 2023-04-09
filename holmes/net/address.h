@@ -11,11 +11,13 @@
 #include <iostream>
 
 #include "holmes/octet/string.h"
+#include "holmes/artefact.h"
 
 namespace holmes::net {
 
 /** A base class to represent a generic address. */
-class address {
+class address:
+	public artefact {
 	friend std::ostream& operator<<(std::ostream& out, const address& addr);
 private:
 	/** The raw content of this address. */

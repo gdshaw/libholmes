@@ -4,6 +4,7 @@
 // GNU General Public License (version 3 or any later version).
 
 #include "holmes/parse_error.h"
+#include "holmes/bson/string.h"
 #include "holmes/net/inet4/address.h"
 
 namespace holmes::net::inet4 {
@@ -30,6 +31,12 @@ address::address(const octet::string& data):
 	if (data.length() != 4) {
 		throw parse_error("IPv4 address must be 4 octets long");
 	}
+}
+
+bson::document address::to_bson() const {
+	bson::document bson_addr;
+	bson_addr.append("addr", bson::string(*this));
+	return bson_addr;
 }
 
 } /* namespace holmes::net::inet4 */
