@@ -34,10 +34,17 @@ def compare(path, expected, observed):
 def test(pathname):
     file = open(pathname, "r")
     test = json.load(file)
-    data = test["data"]
+    if "data" in test:
+        data = test["data"]
+        encoding = "-b"
+    elif "hexdata" in test:
+        data = test["hexdata"]
+        encoding = "-x"
+    else:
+        raise KeyError("data/hexdata")
     expected = test["expected"]
 
-    sp = subprocess.run(['holmes', 'decode', '-b', data], stdout=subprocess.PIPE)
+    sp = subprocess.run(['holmes', 'decode', encoding, data], stdout=subprocess.PIPE)
     observed = json.loads(sp.stdout)
     compare('', expected, observed)
 
