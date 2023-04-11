@@ -12,6 +12,8 @@ namespace holmes {
 
 /** A class to represent a feature of an artefact. */
 class feature {
+public:
+	class logger;
 private:
 	/** The feature type. */
 	std::string _type;
